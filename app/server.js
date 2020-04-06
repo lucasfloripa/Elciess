@@ -1,22 +1,29 @@
 const express = require("express"),
   dotenv = require("dotenv"),
-  morgan = require("morgan");
-connectDB = require("./config/db");
+  morgan = require("morgan"),
+  connectDB = require("./config/db"),
+  alunosRoute = require("./routes/alunosRoute");
 
-// Load env vars
+// Carregando variáveis de sistema
 dotenv.config({ path: "./config/config.env" });
 const { PORT, NODE_ENV } = process.env;
 
-// Connect to database
+// Conectando com o database
 connectDB();
 
-// Create Express app
+// Criando App do express
 const app = express();
+
+// Middleware Body Parser
+app.use(express.json());
 
 // Morgan
 if (NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+// Montando as rotas
+app.use("/api/v1/alunos", alunosRoute);
 
 const server = app.listen(
   PORT,
