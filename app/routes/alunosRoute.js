@@ -1,5 +1,5 @@
 const express = require("express");
-const advancedResults = require("../middlewares/advacedResults");
+const advancedResults = require("../middlewares/advancedResults");
 const Aluno = require("../models/Aluno");
 const {
   getAlunos,
