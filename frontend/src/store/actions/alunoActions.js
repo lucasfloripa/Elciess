@@ -46,7 +46,7 @@ export const updateAluno = (updatedAluno) => async (dispatch) => {
 };
 
 export const deleteAluno = (id) => async (dispatch) => {
-  const res = await axios.delete(`http://localhost:5000/api/v1/alunos/${id}`);
+  await axios.delete(`http://localhost:5000/api/v1/alunos/${id}`);
 
   return dispatch({
     type: DELETE_ALUNO,

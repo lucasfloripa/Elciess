@@ -25,6 +25,12 @@ if (NODE_ENV === "development") {
 // Montando as rotas
 app.use("/api/v1/alunos", alunosRoute);
 
+// Cors
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
+
 const server = app.listen(
   PORT,
   console.log(`Server running in ${NODE_ENV}, mode on port ${PORT}`)

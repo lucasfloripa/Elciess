@@ -4,8 +4,6 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   // Copia req.query
   const reqQueryAux = { ...req.query };
 
-  console.log(req.query);
-
   // Fields para excluir para não serem usados como fields do modelo
   const removeFields = ["select", "sort", "page", "limit"];
 
