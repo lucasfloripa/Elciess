@@ -1,31 +1,28 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-// React Fullpage
-import ReactFullpage from "@fullpage/react-fullpage";
+// Css
+import "./assets/scss/main.css";
 
 // Redux Store
 import store from "./store";
 
 // Pages
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-        <ReactFullpage
-          licenseKey={"464F89D2-698A4E12-857D0A86-362F25E9"}
-          scrollingSpeed={1000}
-          render={({ state, fullpageApi }) => {
-            return (
-              <ReactFullpage.Wrapper>
-                <Login />
-              </ReactFullpage.Wrapper>
-            );
-          }}
-        />
-      </div>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/register" component={Register} />
+          </Switch>
+        </div>
+      </Router>
     </Provider>
   );
 }

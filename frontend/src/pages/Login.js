@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAlunos } from "../store/actions/alunoActions";
+import { getUsers } from "../store/actions/userActions";
 
 // Components
 import FormLogin from "../components/FormLogin";
@@ -9,21 +9,23 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
-  componentDidMount() {
-    this.props.getAlunos();
+  handleLogin(values) {
+    console.log(values);
   }
 
   render() {
-    console.log(this.props.alunos.data);
-
     return (
-      <div className="section">
+      <div id="login-section">
         <div className="card mx-auto px-3" style={{ width: "30%" }}>
-          <div className="card-body text-center">
-            <h2 className="card-title py-3">Elciess</h2>
-            <FormLogin />
+          <div className="card-body">
+            <h2 className="card-title text-center py-3">ELCIESS</h2>
+            <FormLogin onLogin={this.handleLogin} />
+            <a href="#" className="mt-3">
+              Esqueceu a senha?
+            </a>
           </div>
         </div>
       </div>
@@ -32,7 +34,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  alunos: state.aluno.alunos,
+  users: state.user.users,
 });
 
-export default connect(mapStateToProps, { getAlunos })(Login);
+export default connect(mapStateToProps, { getUsers })(Login);

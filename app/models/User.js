@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const AlunoSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
@@ -16,17 +16,20 @@ const AlunoSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
+  tipoUsuario: {
+    type: String,
+    required: [true, "Por favor informe o tipo do usuário"],
+    enum: ["aluno", "professor", "responsavel", "admin"],
+  },
   nome: {
     type: String,
     required: [true, "Por favor informe um nome"],
     trim: true,
     maxlength: [70, "Nome não pode ter mais que 70 caractéres"],
   },
-  idade: {
-    type: Number,
-    required: [true, "Por favor informe uma idade válida"],
-    min: 12,
-    max: 80,
+  dataNasc: {
+    type: Date,
+    required: [true, "Por favor informe a data de nascimento"],
   },
   telefone: {
     type: Number,
@@ -42,4 +45,4 @@ const AlunoSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Aluno", AlunoSchema);
+module.exports = mongoose.model("User", UserSchema);

@@ -1,5 +1,5 @@
-export const GET_ALUNOS = 'GET_ALUNOS';
-export const GET_ALUNO = 'GET_ALUNO';
-export const DELETE_ALUNO = 'DELETE_ALUNO';
-export const CREATE_ALUNO = 'CREATE_ALUNO';
-export const UPDATE_ALUNO = 'UPDATE_ALUNO';
+export const GET_USERS = 'GET_USERS';
+export const GET_USER = 'GET_USER';
+export const DELETE_USER = 'DELETE_USER';
+export const CREATE_USER = 'CREATE_USER';
+export const UPDATE_USER = 'UPDATE_USER';

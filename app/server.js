@@ -1,8 +1,9 @@
 const express = require("express"),
   dotenv = require("dotenv"),
   morgan = require("morgan"),
+  cors = require("cors"),
   connectDB = require("./config/db"),
-  alunosRoute = require("./routes/alunosRoute");
+  usersRoute = require("./routes/usersRoute");
 
 // Carregando variáveis de sistema
 dotenv.config({ path: "./config/config.env" });
@@ -22,14 +23,11 @@ if (NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// Montando as rotas
-app.use("/api/v1/alunos", alunosRoute);
-
 // Cors
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  next();
-});
+app.use(cors());
+
+// Montando as rotas
+app.use("/api/v1/users", usersRoute);
 
 const server = app.listen(
   PORT,
