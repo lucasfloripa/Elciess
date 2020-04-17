@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getUsers } from "../store/actions/userActions";
+import { login } from "../store/actions/authActions";
 
 // Components
 import FormLogin from "../components/FormLogin";
@@ -12,8 +12,8 @@ class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  handleLogin(values) {
-    console.log(values);
+  handleLogin({ email, senha }) {
+    this.props.login(email, senha);
   }
 
   render() {
@@ -37,4 +37,4 @@ const mapStateToProps = (state) => ({
   users: state.user.users,
 });
 
-export default connect(mapStateToProps, { getUsers })(Login);
+export default connect(mapStateToProps, { login })(Login);

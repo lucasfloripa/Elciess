@@ -3,7 +3,8 @@ const express = require("express"),
   morgan = require("morgan"),
   cors = require("cors"),
   connectDB = require("./config/db"),
-  usersRoute = require("./routes/usersRoute");
+  usersRoute = require("./routes/usersRoute"),
+  authRoute = require("./routes/authRoute");
 
 // Carregando variáveis de sistema
 dotenv.config({ path: "./config/config.env" });
@@ -28,6 +29,7 @@ app.use(cors());
 
 // Montando as rotas
 app.use("/api/v1/users", usersRoute);
+app.use("/api/v1/auth", authRoute);
 
 const server = app.listen(
   PORT,

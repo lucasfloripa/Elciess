@@ -41,7 +41,7 @@ function FormLogin(props) {
               )}
             />
           </div>
-          <button className="btn btn-outline-primary btn-block">Entrar</button>
+          <button type="submit" className="btn btn-outline-primary btn-block">Entrar</button>
           <div className="text-center">ou</div>
         </FormikForm>
       </Formik>
@@ -63,7 +63,7 @@ const validationSchema = yup.object({
   senha: yup
     .string()
     .trim()
-    .min(8, "8 caracteres necessários para senha")
+    .min(6, "6 caracteres necessários para senha")
     .required("Preencha o campo Senha"),
 });
 

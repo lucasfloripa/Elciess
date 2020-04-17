@@ -25,7 +25,10 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 exports.createUser = asyncHandler(async (req, res, next) => {
   const newUser = await User.create(req.body);
 
-  res.status(201).json({ sucesso: true, data: newUser });
+  // Create token
+  const token = newUser.getSignedJwtToken();
+
+  res.status(201).json({ sucesso: true, token });
 });
 
 // @desc      Update user

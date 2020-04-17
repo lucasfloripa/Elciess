@@ -177,12 +177,12 @@ const validationSchema = yup.object({
   senha: yup
     .string()
     .trim()
-    .min(8, "8 caracteres necessários para senha")
+    .min(6, "6 caracteres necessários para senha")
     .required("Informe uma senha válida"),
   confirmaSenha: yup
     .string()
     .trim()
-    .min(8, "8 caracteres necessários para senha")
+    .min(6, "6 caracteres necessários para senha")
     .required("Informe uma senha válida"),
   endereço: yup.string().trim().required("Informe seu endereço completo"),
   telefone: yup.number().required("Informe seu telefone ou celular"),

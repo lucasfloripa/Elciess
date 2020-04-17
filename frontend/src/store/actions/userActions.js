@@ -24,6 +24,7 @@ export const getUsers = () => async (dispatch) => {
     payload: res.data,
   });
 };
+
 export const createUser = (newUser) => async (dispatch) => {
   const res = await axios.post("http://localhost:5000/api/v1/users", newUser);
 
