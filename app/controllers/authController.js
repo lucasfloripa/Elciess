@@ -1,5 +1,6 @@
 const User = require("../models/User"),
-  asyncHandler = require("../middlewares/asyncHandler");
+  asyncHandler = require("../middlewares/asyncHandler"),
+  ErrorResponse = require("../utils/errorResponse");
 
 // @desc      Login
 // @route     POST /api/v1/auth/login
@@ -28,7 +29,21 @@ exports.login = asyncHandler(async (req, res, next) => {
   // Create token
   const token = user.getSignedJwtToken();
 
-  console.log("123");
-
   res.status(200).json({ sucesso: true, token });
 });
+
+// @desc      Get usuário logado
+// @route     GET /api/v1/auth/me
+// @acess     Private
+exports.getMe = asyncHandler(async (req, res, next) => {
+  const { id } = req.user;
+
+  const user = User.findById(id);
+
+  if (!user) {
+    return next(new ErrorResponse(`Usuário com id ${id} não encontrado`, 404));
+  }
+
+  res.status(200).json({ sucesso: true, data: user });
+});
+

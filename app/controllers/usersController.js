@@ -1,5 +1,6 @@
 const User = require("../models/User"),
-  asyncHandler = require("../middlewares/asyncHandler");
+  asyncHandler = require("../middlewares/asyncHandler"),
+  ErrorResponse = require("../utils/errorResponse");
 
 // @desc      Get all users
 // @route     GET /api/v1/users
@@ -15,6 +16,10 @@ exports.getUser = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
   const user = await User.findById(id);
+
+  if (!user) {
+    return next(new ErrorResponse(`Usuário não encontrado com id ${id}`, 404));
+  }
 
   res.status(200).json({ sucesso: true, data: user });
 });
@@ -38,7 +43,13 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   const { id } = req.params,
     { body } = req;
 
-  const updatedUser = await User.findByIdAndUpdate(id, body, {
+  let updatedUser = await User.findById(id);
+
+  if (!updatedUser) {
+    return next(new ErrorResponse(`Usuário de id ${id} não encontrado`, 404));
+  }
+
+  updatedUser = await User.findByIdAndUpdate(id, body, {
     new: true,
     runValidators: true,
   });
@@ -52,7 +63,13 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 exports.deleteUser = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
-  await User.findByIdAndDelete(id);
+  const userToDelete = await User.findById(id);
+
+  if (!userToDelete) {
+    return next(new ErrorResponse(`Usuário de id ${id} não encontrado`, 404));
+  }
+
+  await userToDelete.remove();
 
   res.status(200).json({ sucesso: true, data: {} });
 });
