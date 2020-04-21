@@ -41,14 +41,14 @@ function FormLogin(props) {
               )}
             />
           </div>
-          <button type="submit" className="btn btn-outline-primary btn-block">Entrar</button>
+          <button type="submit" className="btn btn-outline-primary btn-block">
+            Entrar
+          </button>
           <div className="text-center">ou</div>
         </FormikForm>
       </Formik>
       <Link to={"/register"} style={{ textDecoration: "none" }}>
-        <button className="btn btn-outline-success btn-block">
-          Cadastrar
-        </button>
+        <button className="btn btn-outline-success btn-block">Cadastrar</button>
       </Link>
     </Fragment>
   );

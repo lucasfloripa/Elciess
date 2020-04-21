@@ -32,13 +32,20 @@ exports.login = asyncHandler(async (req, res, next) => {
   res.status(200).json({ sucesso: true, token });
 });
 
+// @desc      Logout
+// @route     GET /api/v1/auth/logout
+// @acess     Private
+exports.logout = asyncHandler(async (req, res, next) => {
+  res.status(200).json({ sucesso: true });
+});
+
 // @desc      Get usuário logado
 // @route     GET /api/v1/auth/me
 // @acess     Private
 exports.getMe = asyncHandler(async (req, res, next) => {
   const { id } = req.user;
 
-  const user = User.findById(id);
+  const user = await User.findById(id);
 
   if (!user) {
     return next(new ErrorResponse(`Usuário com id ${id} não encontrado`, 404));
@@ -46,4 +53,3 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ sucesso: true, data: user });
 });
-

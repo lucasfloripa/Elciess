@@ -19,13 +19,14 @@ class Register extends Component {
     toaster.notify(
       <div className="text-success font-weight-bold">Usuário Criado</div>,
       {
-        duration: 5000,
+        duration: 3000,
         position: "top",
       }
     );
   }
 
   render() {
+    console.log(this.props.auth);
     return (
       <section id="register-section">
         <div className="card mx-auto px-3" style={{ width: "30%" }}>
@@ -39,4 +40,8 @@ class Register extends Component {
   }
 }
 
-export default connect(null, { createUser })(Register);
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { createUser })(Register);

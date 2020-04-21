@@ -22,6 +22,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
     next();
   } catch (error) {
-    return next();
+    return next(new ErrorResponse("Acesso não autorizado nesta rota", 401));
   }
 });
