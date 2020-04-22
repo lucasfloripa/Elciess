@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // Pages
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Test from "./pages/Test";
+import Dashboard from "./pages/dashboard";
 
 // Authentication
 import setAuthorizationToken from "./utils/setAuthorizationToken";
@@ -33,7 +33,7 @@ function App() {
           <Switch>
             <Route exact path="/login" component={noRequireAuth(Login)} />
             <Route exact path="/register" component={noRequireAuth(Register)} />
-            <Route exact path="/test" component={requireAuth(Test)} />
+            <Route exact path="/dashboard" component={requireAuth(Dashboard)} />
           </Switch>
         </div>
       </Router>

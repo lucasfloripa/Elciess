@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
 import * as yup from "yup";
+import PropTypes from "prop-types";
 
 function FormLogin(props) {
   return (
@@ -47,7 +48,7 @@ function FormLogin(props) {
           <div className="text-center">ou</div>
         </FormikForm>
       </Formik>
-      <Link to={"/register"} style={{ textDecoration: "none" }}>
+      <Link to={"/register"} className="text-decoration-none">
         <button className="btn btn-outline-success btn-block">Cadastrar</button>
       </Link>
     </Fragment>
@@ -66,5 +67,9 @@ const validationSchema = yup.object({
     .min(6, "6 caracteres necessários para senha")
     .required("Preencha o campo Senha"),
 });
+
+FormLogin.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+};
 
 export default FormLogin;

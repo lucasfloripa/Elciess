@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createUser } from "../store/actions/userActions";
 import toaster from "toasted-notes";
+import PropTypes from "prop-types";
 
 // Components
 import FormRegister from "../components/FormRegister";
@@ -9,13 +10,12 @@ import FormRegister from "../components/FormRegister";
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
     this.handleRegister = this.handleRegister.bind(this);
   }
 
   handleRegister(values) {
     const { history, createUser } = this.props;
-    createUser(values).then(history.push("/"));
+    createUser(values).then(history.push("/login"));
     toaster.notify(
       <div className="text-success font-weight-bold">Usuário Criado</div>,
       {
@@ -26,7 +26,6 @@ class Register extends Component {
   }
 
   render() {
-    console.log(this.props.auth);
     return (
       <section id="register-section">
         <div className="card mx-auto px-3" style={{ width: "30%" }}>
@@ -40,8 +39,8 @@ class Register extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
+Register.propTypes = {
+  createUser: PropTypes.func.isRequired,
+};
 
-export default connect(mapStateToProps, { createUser })(Register);
+export default connect(null, { createUser })(Register);

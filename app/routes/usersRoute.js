@@ -14,7 +14,14 @@ const router = express.Router();
 
 const { protect } = require("../middlewares/auth");
 
-router.route("/").get(advancedResults(User, null), getUsers).post(createUser);
-router.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
+router
+  .route("/")
+  .get(protect, advancedResults(User, null), getUsers)
+  .post(createUser);
+router
+  .route("/:id")
+  .get(protect, getUser)
+  .put(protect, updateUser)
+  .delete(protect, deleteUser);
 
 module.exports = router;

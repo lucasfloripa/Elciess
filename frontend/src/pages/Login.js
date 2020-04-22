@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { login } from "../store/actions/authActions";
+import PropTypes from "prop-types";
 
 // Components
 import FormLogin from "../components/FormLogin";
@@ -8,7 +9,6 @@ import FormLogin from "../components/FormLogin";
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
     this.handleLogin = this.handleLogin.bind(this);
   }
 
@@ -19,7 +19,7 @@ class Login extends Component {
   render() {
     return (
       <div id="login-section">
-        <div className="card mx-auto px-3" style={{ width: "30%" }}>
+        <div className="card mx-auto px-3 w-25">
           <div className="card-body">
             <h2 className="card-title text-center py-3">ELCIESS</h2>
             <FormLogin onLogin={this.handleLogin} />
@@ -33,8 +33,8 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  users: state.user.users,
-});
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+};
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(null, { login })(Login);

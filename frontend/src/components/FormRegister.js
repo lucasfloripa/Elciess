@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
 import * as yup from "yup";
 import toaster from "toasted-notes";
+import PropTypes from "prop-types";
 
 function FormRegister(props) {
   return (
@@ -26,7 +27,7 @@ function FormRegister(props) {
           } else {
             toaster.notify(
               <div className="text-danger font-weight-bold">
-                A senha informada deve igual a confirmação de senha
+                A senha informada deve ser igual a confirmação de senha
               </div>,
               {
                 duration: 5000,
@@ -158,7 +159,7 @@ function FormRegister(props) {
           <div className="text-center">ou</div>
         </FormikForm>
       </Formik>
-      <Link to={"/"} style={{ textDecoration: "none" }}>
+      <Link to={"/login"} className="text-decoration-none">
         <button type="button" className="btn btn-outline-secondary btn-block">
           Voltar
         </button>
@@ -166,6 +167,10 @@ function FormRegister(props) {
     </Fragment>
   );
 }
+
+FormRegister.propTypes = {
+  onRegister: PropTypes.func.isRequired,
+};
 
 const validationSchema = yup.object({
   nome: yup.string().trim().required("Informe seu nome completo"),

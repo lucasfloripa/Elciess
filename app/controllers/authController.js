@@ -10,20 +10,20 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   // Validate email e senha
   if (!email || !senha) {
-    return next();
+    return next(new ErrorResponse("Credenciais inválidas", 401));
   }
 
   const user = await User.findOne({ email }).select("+senha");
 
   if (!user) {
-    return next();
+    return next(new ErrorResponse("Usuário não encontrado", 404));
   }
 
   // Check if password matches
   const isMatch = await user.matchPassoword(senha);
 
   if (!isMatch) {
-    return next();
+    return next(new ErrorResponse('Senha inválida', 401));
   }
 
   // Create token

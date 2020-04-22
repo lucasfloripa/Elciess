@@ -6,12 +6,12 @@ export default function (ComposedComponent) {
   class NoAuthentication extends Component {
     componentWillMount() {
       if (this.props.isAuthenticated) {
-        this.props.history.push("/test");
+        this.props.history.push("/dashboard");
       }
     }
     componentWillUpdate(nextProps) {
       if (nextProps.isAuthenticated) {
-        this.props.history.push("/test");
+        this.props.history.push("/dashboard");
       }
     }
     PropTypes = {
