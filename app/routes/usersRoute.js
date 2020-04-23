@@ -18,6 +18,7 @@ router
   .route("/")
   .get(protect, advancedResults(User, null), getUsers)
   .post(createUser);
+  
 router
   .route("/:id")
   .get(protect, getUser)

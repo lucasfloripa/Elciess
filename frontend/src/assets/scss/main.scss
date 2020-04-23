@@ -1,4 +1,33 @@
+// Global
+* {
+  box-sizing: border-box;
+}
+
+// Login/Register Section
 #login-section,
 #register-section {
   margin-top: 4.5rem;
+}
+
+#section-home,
+#section-ranking,
+#section-desafios,
+#section-conquistas {
+  background-size: cover;
+  background-position: center;
+}
+
+#section {
+  &-home {
+    background-image: url("../images/castle.jpg");
+  }
+  &-ranking {
+    background-image: url("../images/ranking.jpg");
+  }
+  &-conquistas {
+    background-image: url("../images/armory.jpg");
+  }
+  &-desafios {
+    background-image: url("../images/desafios.jpg");
+  }
 }

@@ -1,27 +1,54 @@
 import React, { Component } from "react";
 import ReactFullPage from "@fullpage/react-fullpage";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { setCurrentUser } from "../../store/actions/authActions";
 
 // Sections
-import { Profile, Ranking } from "./sections";
+import { Home, Ranking, Conquistas, Desafios } from "./sections";
 
 class index extends Component {
-  render() {
-    return (
-      <ReactFullPage
-        licenseKey={"464F89D2-698A4E12-857D0A86-362F25E9"}
-        scrollSpeed={1000}
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-        render={({ state, fullpageApi}) => {
-          return (
-            <ReactFullPage.Wrapper>
-              <Profile />
-              <Ranking />
-            </ReactFullPage.Wrapper>
-          )
-        }}
-      />
-    );
+  componentDidMount() {
+    this.props.setCurrentUser();
+  }
+
+  render() {
+    const { data } = this.props.user;
+    if (data) {
+      return (
+        <ReactFullPage
+          licenseKey={"464F89D2-698A4E12-857D0A86-362F25E9"}
+          scrollSpeed={1000}
+          render={({ state, fullpageApi }) => {
+            return (
+              <ReactFullPage.Wrapper>
+                <Home />
+                <Conquistas />
+                <Ranking />
+                <Desafios />
+              </ReactFullPage.Wrapper>
+            );
+          }}
+        />
+      );
+    } else {
+      return <h1>Loading...</h1>;
+    }
   }
 }
 
-export default index;
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
+index.propTypes = {
+  user: PropTypes.object.isRequired,
+  setCurrentUser: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { setCurrentUser })(index);

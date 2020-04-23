@@ -1,5 +1,34 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 #login-section,
 #register-section {
   margin-top: 4.5rem;
+}
+
+#section-home,
+#section-ranking,
+#section-desafios,
+#section-conquistas {
+  background-size: cover;
+  background-position: center;
+}
+
+#section-home {
+  background-image: url("../images/castle.jpg");
+}
+
+#section-ranking {
+  background-image: url("../images/ranking.jpg");
+}
+
+#section-conquistas {
+  background-image: url("../images/armory.jpg");
+}
+
+#section-desafios {
+  background-image: url("../images/desafios.jpg");
 }
 /*# sourceMappingURL=main.css.map */

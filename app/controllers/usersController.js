@@ -36,11 +36,11 @@ exports.createUser = asyncHandler(async (req, res, next) => {
   res.status(201).json({ sucesso: true, token });
 });
 
-// @desc      Update user
+// @desc      Update Currently user
 // @route     PUT /api/v1/users/:id
 // @access    Private
 exports.updateUser = asyncHandler(async (req, res, next) => {
-  const { id } = req.params,
+  const { id } = req.user,
     { body } = req;
 
   let updatedUser = await User.findById(id);
