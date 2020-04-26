@@ -1,4 +1,4 @@
-import { LOGIN, SET_CURRENT_USER, LOGOUT } from "./types";
+import { LOGIN, LOGOUT, SET_USUARIO_ATUAL } from "./types";
 import axios from "axios";
 import setAuthorizationToken from "../../utils/setAuthorizationToken";
 
@@ -31,11 +31,11 @@ export const logout = () => async (dispatch) => {
   });
 };
 
-export const setCurrentUser = () => async (dispatch) => {
+export const setUsuarioAtual = () => async (dispatch) => {
   const res = await axios.get("http://localhost:5000/api/v1/auth/me");
 
   return dispatch({
-    type: SET_CURRENT_USER,
+    type: SET_USUARIO_ATUAL,
     payload: res.data,
   });
 };

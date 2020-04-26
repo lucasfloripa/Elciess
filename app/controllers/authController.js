@@ -1,4 +1,4 @@
-const User = require("../models/User"),
+const Usuarios = require("../models/Usuarios"),
   asyncHandler = require("../middlewares/asyncHandler"),
   ErrorResponse = require("../utils/errorResponse");
 
@@ -13,21 +13,21 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Credenciais inválidas", 401));
   }
 
-  const user = await User.findOne({ email }).select("+senha");
+  const usuario = await Usuarios.findOne({ email }).select("+senha");
 
-  if (!user) {
+  if (!usuario) {
     return next(new ErrorResponse("Usuário não encontrado", 404));
   }
 
   // Check if password matches
-  const isMatch = await user.matchPassoword(senha);
+  const isMatch = await usuario.matchPassoword(senha);
 
   if (!isMatch) {
-    return next(new ErrorResponse('Senha inválida', 401));
+    return next(new ErrorResponse("Senha inválida", 401));
   }
 
   // Create token
-  const token = user.getSignedJwtToken();
+  const token = usuario.getSignedJwtToken();
 
   res.status(200).json({ sucesso: true, token });
 });
@@ -43,13 +43,13 @@ exports.logout = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/auth/me
 // @acess     Private
 exports.getMe = asyncHandler(async (req, res, next) => {
-  const { id } = req.user;
+  const { id } = req.usuario;
 
-  const user = await User.findById(id);
+  const usuario = await Usuarios.findById(id);
 
-  if (!user) {
+  if (!usuario) {
     return next(new ErrorResponse(`Usuário com id ${id} não encontrado`, 404));
   }
 
-  res.status(200).json({ sucesso: true, data: user });
+  res.status(200).json({ sucesso: true, data: usuario });
 });

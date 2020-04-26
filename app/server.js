@@ -3,8 +3,12 @@ const express = require("express"),
   morgan = require("morgan"),
   cors = require("cors"),
   connectDB = require("./config/db"),
-  usersRoute = require("./routes/usersRoute"),
-  authRoute = require("./routes/authRoute");
+  alunosRoute = require("./routes/alunosRoute"),
+  professoresRoute = require("./routes/professoresRoute"),
+  desafiosRoute = require("./routes/desafiosRoute"),
+  turmasRoute = require("./routes/turmasRoute"),
+  authRoute = require("./routes/authRoute"),
+  usuariosRoute = require("./routes/usuariosRoute");
 
 // Carregando variáveis de sistema
 dotenv.config({ path: "./config/config.env" });
@@ -28,8 +32,12 @@ if (NODE_ENV === "development") {
 app.use(cors());
 
 // Montando as rotas
-app.use("/api/v1/users", usersRoute);
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/alunos", alunosRoute);
+app.use("/api/v1/professores", professoresRoute);
+app.use("/api/v1/turmas", turmasRoute);
+app.use("/api/v1/desafios", desafiosRoute);
+app.use("/api/v1/usuarios", usuariosRoute);
 
 const server = app.listen(
   PORT,

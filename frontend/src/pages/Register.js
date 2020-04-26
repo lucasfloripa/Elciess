@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createUser } from "../store/actions/userActions";
-import toaster from "toasted-notes";
+import { createAluno } from "../store/actions/alunoActions";
+import { createProfessor } from "../store/actions/professorActions";
 import PropTypes from "prop-types";
 
 // Components
@@ -14,15 +14,20 @@ class Register extends Component {
   }
 
   handleRegister(values) {
-    const { history, createUser } = this.props;
-    createUser(values).then(history.push("/login"));
-    toaster.notify(
-      <div className="text-success font-weight-bold">Usuário Criado</div>,
-      {
-        duration: 3000,
-        position: "top",
-      }
-    );
+    const { createAluno, createProfessor } = this.props;
+    const { nome, email, senha, tipoUsuario } = values;
+
+    const novoUsuario = {
+      nome,
+      email,
+      senha,
+    };
+
+    if (tipoUsuario === "aluno") {
+      createAluno(novoUsuario);
+    } else if (tipoUsuario === "professor") {
+      createProfessor(novoUsuario);
+    }
   }
 
   render() {
@@ -40,7 +45,8 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  createUser: PropTypes.func.isRequired,
+  createAluno: PropTypes.func.isRequired,
+  createProfessor: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createUser })(Register);
+export default connect(null, { createAluno, createProfessor })(Register);

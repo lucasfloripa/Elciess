@@ -1,24 +1,24 @@
-import { LOGIN, LOGOUT, SET_CURRENT_USER } from "../actions/types";
+import { LOGIN, LOGOUT, SET_USUARIO_ATUAL } from "../actions/types";
 
-const INITIAL_STATE = { isAuthenticated: false, user: {} };
+const INITIAL_STATE = { autenticado: false, usuario: {} };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case LOGIN:
       return {
         ...state,
-        isAuthenticated: true,
+        autenticado: true,
       };
     case LOGOUT:
       return {
         ...state,
-        isAuthenticated: false,
+        autenticado: false,
       };
-    case SET_CURRENT_USER:
+    case SET_USUARIO_ATUAL:
       return {
         ...state,
-        user: action.payload,
-        isAuthenticated: true,
+        usuario: action.payload,
+        autenticado: true,
       };
     default:
       return {

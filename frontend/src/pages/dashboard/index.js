@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactFullPage from "@fullpage/react-fullpage";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { setCurrentUser } from "../../store/actions/authActions";
+import { setUsuarioAtual } from "../../store/actions/authActions";
 
 // Sections
 import { Home, Ranking, Conquistas, Desafios } from "./sections";
@@ -14,11 +14,11 @@ class index extends Component {
   }
 
   componentDidMount() {
-    this.props.setCurrentUser();
+    this.props.setUsuarioAtual();
   }
 
   render() {
-    const { data } = this.props.user;
+    const { data } = this.props.usuario;
     if (data) {
       return (
         <ReactFullPage
@@ -43,12 +43,12 @@ class index extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user,
+  usuario: state.auth.usuario,
 });
 
 index.propTypes = {
-  user: PropTypes.object.isRequired,
-  setCurrentUser: PropTypes.func.isRequired,
+  usuario: PropTypes.object.isRequired,
+  setUsuarioAtual: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { setCurrentUser })(index);
+export default connect(mapStateToProps, { setUsuarioAtual })(index);

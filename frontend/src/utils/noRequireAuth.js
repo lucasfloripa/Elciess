@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 export default function (ComposedComponent) {
   class NoAuthentication extends Component {
     componentWillMount() {
-      if (this.props.isAuthenticated) {
+      if (this.props.autenticado) {
         this.props.history.push("/dashboard");
       }
     }
     componentWillUpdate(nextProps) {
-      if (nextProps.isAuthenticated) {
+      if (nextProps.autenticado) {
         this.props.history.push("/dashboard");
       }
     }
@@ -22,7 +22,7 @@ export default function (ComposedComponent) {
     }
   }
   function mapStateToProps(state) {
-    return { isAuthenticated: state.auth.isAuthenticated };
+    return { autenticado: state.auth.autenticado };
   }
   return connect(mapStateToProps, null)(NoAuthentication);
 }
