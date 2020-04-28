@@ -30,7 +30,7 @@ exports.getUsuario = asyncHandler(async (req, res, next) => {
 exports.deleteUsuario = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
-  const usuarioToDelete = await Usuario.findById(id);
+  const usuarioToDelete = await Usuarios.findById(id);
 
   if (!usuarioToDelete) {
     return next(new ErrorResponse(`Usuário com id ${id} não encontrado`, 404));

@@ -10,13 +10,17 @@ const {
   deleteDesafio,
 } = require("../controllers/desafiosController");
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 const { protect } = require("../middlewares/auth");
 
 router
   .route("/")
-  .get(protect, advancedResults(Desafio, null), getDesafios)
+  .get(
+    protect,
+    advancedResults(Desafio, { path: "professor", select: "nome disciplina" }),
+    getDesafios
+  )
   .post(protect, createDesafio);
 
 router

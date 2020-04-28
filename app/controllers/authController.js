@@ -45,7 +45,16 @@ exports.logout = asyncHandler(async (req, res, next) => {
 exports.getMe = asyncHandler(async (req, res, next) => {
   const { id } = req.usuario;
 
-  const usuario = await Usuarios.findById(id);
+  let usuario;
+
+  if (req.usuario.tipoUsuario === "Aluno") {
+    usuario = await Usuarios.findById(id).populate({
+      path: "turma",
+      select: "codigo",
+    });
+  } else {
+    usuario = await Usuarios.findById(id);
+  }
 
   if (!usuario) {
     return next(new ErrorResponse(`Usuário com id ${id} não encontrado`, 404));

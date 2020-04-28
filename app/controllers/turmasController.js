@@ -15,7 +15,7 @@ exports.getTurmas = asyncHandler(async (req, res, next) => {
 exports.getTurma = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
-  const turma = await Turma.findById(id);
+  const turma = await Turma.findById(id).populate("alunos");
 
   if (!turma) {
     return next(new ErrorResponse(`Turma com id ${id} não encontrado`, 404));

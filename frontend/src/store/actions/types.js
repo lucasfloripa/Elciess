@@ -21,3 +21,17 @@ export const GET_ALUNO = "GET_ALUNO";
 export const DELETE_ALUNO = "DELETE_ALUNO";
 export const CREATE_ALUNO = "CREATE_ALUNO";
 export const UPDATE_ALUNO = "UPDATE_ALUNO";
+
+// Turma Types
+export const GET_TURMAS = "GET_TURMAS";
+export const GET_TURMA = "GET_TURMA";
+export const DELETE_TURMA = "DELETE_TURMA";
+export const CREATE_TURMA = "CREATE_TURMA";
+export const UPDATE_TURMA = "UPDATE_TURMA";
+
+// Desafio Types
+export const GET_DESAFIOS = "GET_DESAFIOS";
+export const GET_DESAFIO = "GET_DESAFIO";
+export const DELETE_DESAFIO = "DELETE_DESAFIO";
+export const CREATE_DESAFIO = "CREATE_DESAFIO";
+export const UPDATE_DESAFIO = "UPDATE_DESAFIO";

@@ -28,6 +28,29 @@ export const getAluno = (id) => async (dispatch) => {
   });
 };
 
+export const createAluno = (novoAluno) => async (dispatch) => {
+  const res = await axios.post(
+    "http://localhost:5000/api/v1/alunos",
+    novoAluno
+  );
+
+  const { token } = res.data;
+
+  setAuthorizationToken(token);
+
+  localStorage.setItem("token", JSON.stringify(token));
+
+  return (
+    dispatch({
+      type: CREATE_ALUNO,
+      payload: res.data,
+    }),
+    dispatch({
+      type: LOGIN,
+    })
+  );
+};
+
 export const updateAluno = (updateAluno) => async (dispatch) => {
   const res = await axios.put(
     `http://localhost:5000/api/v1/alunos/${updateAluno._id}`,
@@ -54,29 +77,6 @@ export const deleteAluno = (id) => async (dispatch) => {
     }),
     dispatch({
       type: LOGOUT,
-    })
-  );
-};
-
-export const createAluno = (novoAluno) => async (dispatch) => {
-  const res = await axios.post(
-    "http://localhost:5000/api/v1/alunos",
-    novoAluno
-  );
-
-  const { token } = res.data;
-
-  setAuthorizationToken(token);
-
-  localStorage.setItem("token", JSON.stringify(token));
-
-  return (
-    dispatch({
-      type: CREATE_ALUNO,
-      payload: res.data,
-    }),
-    dispatch({
-      type: LOGIN,
     })
   );
 };

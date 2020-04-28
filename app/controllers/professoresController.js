@@ -1,4 +1,5 @@
 const Professor = require("../models/Professor"),
+  Turma = require("../models/Turma"),
   asyncHandler = require("../middlewares/asyncHandler"),
   ErrorResponse = require("../utils/errorResponse");
 
@@ -15,7 +16,7 @@ exports.getProfessores = asyncHandler(async (req, res, next) => {
 exports.getProfessor = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
-  const professor = await Professor.findById(id);
+  const professor = await Professor.findById(id).populate("desafios");
 
   if (!professor) {
     return next(

@@ -1,7 +1,7 @@
 const express = require("express");
 const advancedResults = require("../middlewares/advancedResults");
 const Professor = require("../models/Professor");
-
+const { protect } = require("../middlewares/auth");
 const {
   getProfessores,
   getProfessor,
@@ -9,10 +9,11 @@ const {
   createProfessor,
   deleteProfessor,
 } = require("../controllers/professoresController");
+const desafiosRouter = require("./desafiosRouter");
 
 const router = express.Router();
 
-const { protect } = require("../middlewares/auth");
+router.use("/:professorId/desafios", desafiosRouter);
 
 router
   .route("/")

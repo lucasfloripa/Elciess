@@ -26,8 +26,16 @@ const DesafioSchema = new mongoose.Schema({
     maxlength: [200, "Resposta não pode ter mais que 200 caractéres"],
     select: false,
   },
+  professor: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Professor",
+    required: true,
+  },
   acerto: {
     type: Boolean,
+  },
+  pontuação: {
+    type: Number,
   },
   criadoEm: {
     type: Date,

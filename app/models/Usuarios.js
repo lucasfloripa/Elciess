@@ -4,7 +4,10 @@ const jwt = require("jsonwebtoken");
 
 const usuarioOptions = {
   discriminatorKey: "tipoUsuario",
-  collection: "usuario",
+  collection: "usuarios",
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+  id: false,
 };
 
 const UsuarioSchema = new mongoose.Schema(
@@ -56,6 +59,20 @@ UsuarioSchema.methods.getSignedJwtToken = function () {
   });
 };
 
-const Usuario = mongoose.model("Usuario", UsuarioSchema);
+// Reverse populate to get all desafios from professor
+UsuarioSchema.virtual("desafios", {
+  ref: "Desafio",
+  localField: "_id",
+  foreignField: "professor",
+  justOne: false,
+});
 
-module.exports = mongoose.model("Usuario");
+// Delete all desafios when the professor owner is deleted
+UsuarioSchema.pre("remove", async function (next) {
+  await this.model("Desafio").deleteMany({ professor: this._id });
+  next();
+});
+
+const Usuarios = mongoose.model("Usuarios", UsuarioSchema);
+
+module.exports = mongoose.model("Usuarios");

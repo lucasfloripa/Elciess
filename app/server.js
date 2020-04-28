@@ -3,12 +3,13 @@ const express = require("express"),
   morgan = require("morgan"),
   cors = require("cors"),
   connectDB = require("./config/db"),
-  alunosRoute = require("./routes/alunosRoute"),
-  professoresRoute = require("./routes/professoresRoute"),
-  desafiosRoute = require("./routes/desafiosRoute"),
-  turmasRoute = require("./routes/turmasRoute"),
-  authRoute = require("./routes/authRoute"),
-  usuariosRoute = require("./routes/usuariosRoute");
+  alunosRouter = require("./routes/alunosRouter"),
+  professoresRouter = require("./routes/professoresRouter"),
+  professoresTurmasRouter = require("./routes/professoresTurmasRouter"),
+  desafiosRouter = require("./routes/desafiosRouter"),
+  turmasRouter = require("./routes/turmasRouter"),
+  authRouter = require("./routes/authRouter"),
+  usuariosRouter = require("./routes/usuariosRouter");
 
 // Carregando variáveis de sistema
 dotenv.config({ path: "./config/config.env" });
@@ -32,12 +33,13 @@ if (NODE_ENV === "development") {
 app.use(cors());
 
 // Montando as rotas
-app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/alunos", alunosRoute);
-app.use("/api/v1/professores", professoresRoute);
-app.use("/api/v1/turmas", turmasRoute);
-app.use("/api/v1/desafios", desafiosRoute);
-app.use("/api/v1/usuarios", usuariosRoute);
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/alunos", alunosRouter);
+app.use("/api/v1/professores", professoresRouter);
+app.use("/api/v1/turmas", turmasRouter);
+app.use("/api/v1/professoresTurmas", professoresTurmasRouter);
+app.use("/api/v1/desafios", desafiosRouter);
+app.use("/api/v1/usuarios", usuariosRouter);
 
 const server = app.listen(
   PORT,

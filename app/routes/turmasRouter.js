@@ -1,5 +1,5 @@
-const Turma = require("../models/Turma");
 const express = require("express");
+const Turma = require("../models/Turma");
 const advancedResults = require("../middlewares/advancedResults");
 const { protect } = require("../middlewares/auth");
 const {
@@ -9,8 +9,11 @@ const {
   createTurma,
   deleteTurma,
 } = require("../controllers/turmasController");
+const alunosRouter = require("./alunosRouter");
 
 const router = express.Router();
+
+router.use("/:turmaId/alunos", alunosRouter);
 
 router
   .route("/")

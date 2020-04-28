@@ -28,6 +28,29 @@ export const getProfessor = (id) => async (dispatch) => {
   });
 };
 
+export const createProfessor = (novoProfessor) => async (dispatch) => {
+  const res = await axios.post(
+    "http://localhost:5000/api/v1/professores",
+    novoProfessor
+  );
+
+  const { token } = res.data;
+
+  setAuthorizationToken(token);
+
+  localStorage.setItem("token", JSON.stringify(token));
+
+  return (
+    dispatch({
+      type: CREATE_PROFESSOR,
+      payload: res.data,
+    }),
+    dispatch({
+      type: LOGIN,
+    })
+  );
+};
+
 export const updateProfessor = (updateProfessor) => async (dispatch) => {
   const res = await axios.put(
     `http://localhost:5000/api/v1/professores/${updateProfessor._id}`,
@@ -54,29 +77,6 @@ export const deleteProfessor = (id) => async (dispatch) => {
     }),
     dispatch({
       type: LOGOUT,
-    })
-  );
-};
-
-export const createProfessor = (novoProfessor) => async (dispatch) => {
-  const res = await axios.post(
-    "http://localhost:5000/api/v1/professores",
-    novoProfessor
-  );
-
-  const { token } = res.data;
-
-  setAuthorizationToken(token);
-
-  localStorage.setItem("token", JSON.stringify(token));
-
-  return (
-    dispatch({
-      type: CREATE_PROFESSOR,
-      payload: res.data,
-    }),
-    dispatch({
-      type: LOGIN,
     })
   );
 };

@@ -4,9 +4,22 @@ const Aluno = require("../models/Aluno"),
 
 // @desc      Get todos alunos
 // @route     GET /api/v1/alunos
+// @route     GET /api/v1/turmas/:turmaId/alunos
 // @access    Private
 exports.getAlunos = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+  const { turmaId } = req.params;
+
+  if (turmaId) {
+    const alunos = await Aluno.find({ turma: turmaId }).populate({
+      path: "turma",
+      select: "codigo",
+    });
+    res
+      .status(200)
+      .json({ sucesso: true, contagem: alunos.length, data: alunos });
+  } else {
+    res.status(200).json(res.advancedResults);
+  }
 });
 
 // @desc      Get único aluno
@@ -15,7 +28,10 @@ exports.getAlunos = asyncHandler(async (req, res, next) => {
 exports.getAluno = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
-  const aluno = await Aluno.findById(id);
+  const aluno = await Aluno.findById(id).populate({
+    path: "turma",
+    select: "codigo",
+  });
 
   if (!aluno) {
     return next(new ErrorResponse(`Aluno com id ${id} não encontrado`, 404));

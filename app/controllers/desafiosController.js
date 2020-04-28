@@ -4,8 +4,21 @@ const Desafio = require("../models/Desafio"),
 
 // @desc      Get all desafios
 // @route     GET /api/v1/desafios
+// @route     GET /api/v1/professores/:professorId/desafios
 // @acess     Private
 exports.getDesafios = asyncHandler(async (req, res, next) => {
+  const { professorId } = req.params;
+
+  if (professorId) {
+    const desafios = await Desafio.find({ professor: professorId }).populate({
+      path: "professor",
+      select: "nome disciplina",
+    });
+    res
+      .status(200)
+      .json({ sucesso: true, contagem: desafios.length, data: desafios });
+  }
+
   res.status(200).json(res.advancedResults);
 });
 
@@ -15,7 +28,10 @@ exports.getDesafios = asyncHandler(async (req, res, next) => {
 exports.getDesafio = asyncHandler(async (req, res, next) => {
   const { id } = req.body;
 
-  const desafio = await Desafio.findById(id);
+  const desafio = await Desafio.findById(id).populate({
+    path: "professor",
+    select: "nome disciplina",
+  });
 
   if (!desafio) {
     return next(new ErrorResponse(`Desafio com id ${id} não encontrado`, 404));
