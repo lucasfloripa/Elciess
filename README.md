@@ -17,12 +17,14 @@ Back-end
   - MongoDB
   - JsonWebToken
 
-## O que já está pronto
+## O que já está totalmente pronto
 1. Login/Register
 2. Proteção de rotas
 3. Autenticação de usuário
   
-## O que ainda quero aplicar neste projeto
+## O que ainda pretendo fazer
 1. Duck Pattern (Redux Pattern)
 2. TypeScript
 3. React Hooks
+4. Fazer como app, React Native
+5. Responsibilidade
