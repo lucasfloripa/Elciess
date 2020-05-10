@@ -2,14 +2,21 @@ const express = require("express"),
   dotenv = require("dotenv"),
   morgan = require("morgan"),
   cors = require("cors"),
-  connectDB = require("./config/db"),
-  alunosRouter = require("./routes/alunosRouter"),
-  professoresRouter = require("./routes/professoresRouter"),
-  professoresTurmasRouter = require("./routes/professoresTurmasRouter"),
-  desafiosRouter = require("./routes/desafiosRouter"),
-  turmasRouter = require("./routes/turmasRouter"),
-  authRouter = require("./routes/authRouter"),
-  usuariosRouter = require("./routes/usuariosRouter");
+  multer = require("multer"),
+  connectDB = require("./config/db");
+
+const routes = ({
+  adminRouter,
+  alunosDesafiosRouter,
+  alunosRouter,
+  authRouter,
+  desafiosRouter,
+  professoresTurmasRouter,
+  professoresRouter,
+  turmasRouter,
+  usuariosRouter,
+  avatarRouter,
+} = require("./routes"));
 
 // Carregando variáveis de sistema
 dotenv.config({ path: "./config/config.env" });
@@ -23,11 +30,22 @@ const app = express();
 
 // Middleware Body Parser
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Morgan
 if (NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+// Multer
+// app.use(
+//   multer({
+//     dest: "./uploads/",
+//     rename: function (fieldname, filename) {
+//       return filename;
+//     },
+//   })
+// );
 
 // Cors
 app.use(cors());
@@ -38,8 +56,11 @@ app.use("/api/v1/alunos", alunosRouter);
 app.use("/api/v1/professores", professoresRouter);
 app.use("/api/v1/turmas", turmasRouter);
 app.use("/api/v1/professoresTurmas", professoresTurmasRouter);
+app.use("/api/v1/alunosDesafios", alunosDesafiosRouter);
 app.use("/api/v1/desafios", desafiosRouter);
 app.use("/api/v1/usuarios", usuariosRouter);
+app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/avatares", avatarRouter);
 
 const server = app.listen(
   PORT,

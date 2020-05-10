@@ -56,16 +56,16 @@ exports.createAluno = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/alunos/:id
 // @access    Private
 exports.updateAluno = asyncHandler(async (req, res, next) => {
-  const { id } = req.usuario,
+  const { _id } = req.usuario,
     { body } = req;
 
-  let updatedAluno = await Aluno.findById(id);
+  let updatedAluno = await Aluno.findById(_id);
 
   if (!updatedAluno) {
-    return next(new ErrorResponse(`Aluno com id ${id} não encontrado`, 404));
+    return next(new ErrorResponse(`Aluno com id ${_id} não encontrado`, 404));
   }
 
-  updatedAluno = await Aluno.findByIdAndUpdate(id, body, {
+  updatedAluno = await Aluno.findByIdAndUpdate(_id, body, {
     new: true,
     runValidators: true,
   });

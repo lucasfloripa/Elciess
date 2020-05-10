@@ -4,8 +4,16 @@ const Usuarios = require("./Usuarios");
 const Aluno = Usuarios.discriminator(
   "Aluno",
   new mongoose.Schema({
-    pontos: { type: Number },
+    nivel: { type: Number },
+    experiencia: { type: Number },
+    titulos: [{ type: String }],
     turma: { type: mongoose.Schema.ObjectId, ref: "Turma" },
+    desafios: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Desafio",
+      },
+    ],
   })
 );
 

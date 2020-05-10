@@ -45,7 +45,7 @@ exports.addProfessorTurmaBound = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Delete bound professor turma
-// @route     Delete /api/v1/professoresTurma/delete/:professorId/:turmaId
+// @route     Delete /api/v1/professoresTurmas/delete/:professorId/:turmaId
 // @access    Private
 exports.deleteProfessorTurmaBound = asyncHandler(async (req, res, next) => {
   const { professorId, turmaId } = req.params;

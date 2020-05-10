@@ -1,6 +1,7 @@
 const express = require("express");
 const advancedResults = require("../middlewares/advancedResults");
 const Usuarios = require("../models/Usuarios");
+const multer = require("../middlewares/multer");
 
 const {
   getUsuario,

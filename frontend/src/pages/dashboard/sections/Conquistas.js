@@ -1,6 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 
-function Conquistas() {
+function Conquistas({ tipoUsuario }) {
   return (
     <section id="section-conquistas" className="section">
       <div className="container-fluid p-0 h-100">
@@ -14,4 +15,8 @@ function Conquistas() {
   );
 }
 
-export default Conquistas;
+const mapStateTopros = (state) => ({
+  tipoUsuario: state.auth.usuario.data.tipoUsuario,
+});
+
+export default connect(mapStateTopros)(Conquistas);

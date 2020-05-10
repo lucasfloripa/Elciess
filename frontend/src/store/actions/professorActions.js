@@ -3,6 +3,7 @@ import setAuthorizationToken from "../../utils/setAuthorizationToken";
 import {
   GET_PROFESSOR,
   GET_PROFESSORES,
+  GET_PROFESSORES_BY_TURMA,
   DELETE_PROFESSOR,
   UPDATE_PROFESSOR,
   CREATE_PROFESSOR,
@@ -24,6 +25,17 @@ export const getProfessor = (id) => async (dispatch) => {
 
   return dispatch({
     type: GET_PROFESSOR,
+    payload: res.data,
+  });
+};
+
+export const getProfessoresByTurma = (id) => async (dispatch) => {
+  const res = axios.get(
+    `http://localhost:5000/api/v1/turmas/${id}/professores`
+  );
+
+  return dispatch({
+    type: GET_PROFESSORES_BY_TURMA,
     payload: res.data,
   });
 };

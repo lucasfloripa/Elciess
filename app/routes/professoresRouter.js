@@ -11,7 +11,7 @@ const {
 } = require("../controllers/professoresController");
 const desafiosRouter = require("./desafiosRouter");
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.use("/:professorId/desafios", desafiosRouter);
 

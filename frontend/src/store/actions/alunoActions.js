@@ -6,6 +6,8 @@ import {
   DELETE_ALUNO,
   UPDATE_ALUNO,
   CREATE_ALUNO,
+  BOUND_ALUNO_DESAFIO,
+  UNBOUND_ALUNO_DESAFIO,
   LOGIN,
   LOGOUT,
 } from "./types";
@@ -79,4 +81,26 @@ export const deleteAluno = (id) => async (dispatch) => {
       type: LOGOUT,
     })
   );
+};
+
+export const boundAlunoDesafio = (desafioId) => async (dispatch) => {
+  const res = await axios.post(
+    `http://localhost:5000/api/v1/alunosDesafios/add/${desafioId}`
+  );
+
+  return dispatch({
+    type: BOUND_ALUNO_DESAFIO,
+    payload: res.data,
+  });
+};
+
+export const unboundAlunoDesafio = (desafioId) => async (dispatch) => {
+  const res = await axios.delete(
+    `http://localhost:5000/api/v1/alunosDesafios/delete/${desafioId}`
+  );
+
+  return dispatch({
+    type: UNBOUND_ALUNO_DESAFIO,
+    payload: res.data,
+  });
 };

@@ -1,22 +1,22 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
 import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
 import * as yup from "yup";
 import PropTypes from "prop-types";
 
-function FormLogin(props) {
+function FormLogin({ onLogin, onToggleForm }) {
   return (
     <Fragment>
       <Formik
         initialValues={{ email: "", senha: "" }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          props.onLogin(values);
+          onLogin(values);
         }}
       >
         <FormikForm>
           <div className="form-group">
-            <Field name="email" className="form-control" placeholder="Email" />
+            <label htmlFor="email">Email</label>
+            <Field name="email" className="form-control border border-dark" />
             <ErrorMessage
               name="email"
               render={(message) => (
@@ -27,11 +27,11 @@ function FormLogin(props) {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="password">Senha</label>
             <Field
               type="password"
               name="senha"
-              className="form-control"
-              placeholder="Senha"
+              className="form-control border border-dark"
             />
             <ErrorMessage
               name="senha"
@@ -42,15 +42,21 @@ function FormLogin(props) {
               )}
             />
           </div>
-          <button type="submit" className="btn btn-outline-primary btn-block">
+          <button
+            type="submit"
+            className="btn btn-block text-yellow border border-dark bg-white btn-hover-login"
+          >
             Entrar
           </button>
           <div className="text-center">ou</div>
         </FormikForm>
       </Formik>
-      <Link to={"/register"} className="text-decoration-none">
-        <button className="btn btn-outline-success btn-block">Cadastrar</button>
-      </Link>
+      <button
+        className="btn btn-block text-yellow border border-dark bg-white btn-hover-login"
+        onClick={onToggleForm}
+      >
+        Cadastrar
+      </button>
     </Fragment>
   );
 }
@@ -70,6 +76,7 @@ const validationSchema = yup.object({
 
 FormLogin.propTypes = {
   onLogin: PropTypes.func.isRequired,
+  onToggleForm: PropTypes.func.isRequired,
 };
 
 export default FormLogin;

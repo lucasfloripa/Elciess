@@ -1,14 +1,15 @@
 import {
   GET_DESAFIO,
   GET_DESAFIOS,
+  GET_DESAFIOS_BY_TURMA,
   DELETE_DESAFIO,
   UPDATE_DESAFIO,
   CREATE_DESAFIO,
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  turmas: [],
-  turma: {},
+  desafios: [],
+  desafio: {},
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -23,6 +24,11 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         desafios: action.payload,
       };
+    case GET_DESAFIOS_BY_TURMA:
+      return {
+        ...state,
+        desafios: action.payload,
+      };
     case CREATE_DESAFIO:
       return {
         ...state,
@@ -31,13 +37,17 @@ export default function (state = INITIAL_STATE, action) {
     case DELETE_DESAFIO:
       return {
         ...state,
-        desafios: state.desafios.filter((desafio) => desafio !== action.payload),
+        desafios: state.desafios.filter(
+          (desafio) => desafio !== action.payload
+        ),
       };
     case UPDATE_DESAFIO:
       return {
         ...state,
-        desafios: state.desafios.map((desafio) =>
-          desafio.id === action.payload.id ? (desafio = action.payload) : desafio
+        desafios: state.desafios.data.map((desafio) =>
+          desafio._id === action.payload.id
+            ? (desafio = action.payload)
+            : desafio
         ),
       };
     default:

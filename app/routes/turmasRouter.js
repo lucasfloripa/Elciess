@@ -10,10 +10,12 @@ const {
   deleteTurma,
 } = require("../controllers/turmasController");
 const alunosRouter = require("./alunosRouter");
+const professoresRouter = require("./professoresRouter");
 
 const router = express.Router();
 
 router.use("/:turmaId/alunos", alunosRouter);
+router.use("/:turmaId/professores", professoresRouter);
 
 router
   .route("/")

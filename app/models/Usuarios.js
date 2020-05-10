@@ -5,8 +5,6 @@ const jwt = require("jsonwebtoken");
 const usuarioOptions = {
   discriminatorKey: "tipoUsuario",
   collection: "usuarios",
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true },
   id: false,
 };
 
@@ -33,6 +31,10 @@ const UsuarioSchema = new mongoose.Schema(
       trim: true,
       maxlength: [70, "Nome não pode ter mais que 70 caractéres"],
     },
+    avatar: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Avatar",
+    },
     criadoEm: {
       type: Date,
       default: Date.now,
@@ -41,11 +43,17 @@ const UsuarioSchema = new mongoose.Schema(
   usuarioOptions
 );
 
-// Encrypt password
-UsuarioSchema.pre("save", async function (next) {
+// Encrypt password on create
+UsuarioSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt(10);
   this.senha = await bcrypt.hash(this.senha, salt);
 });
+
+// Encrypt password on update
+UsuarioSchema.methods.updateSenha = async function (newPassword) {
+  const salt = await bcrypt.genSalt(10);
+  this.senha = await bcrypt.hash(newPassword, salt);
+};
 
 // Match user entered password to hashed password in database
 UsuarioSchema.methods.matchPassoword = async function (enteredPassword) {
@@ -58,14 +66,6 @@ UsuarioSchema.methods.getSignedJwtToken = function () {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };
-
-// Reverse populate to get all desafios from professor
-UsuarioSchema.virtual("desafios", {
-  ref: "Desafio",
-  localField: "_id",
-  foreignField: "professor",
-  justOne: false,
-});
 
 // Delete all desafios when the professor owner is deleted
 UsuarioSchema.pre("remove", async function (next) {

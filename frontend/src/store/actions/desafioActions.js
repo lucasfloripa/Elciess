@@ -2,6 +2,7 @@ const axios = require("axios");
 const {
   GET_DESAFIO,
   GET_DESAFIOS,
+  GET_DESAFIOS_BY_TURMA,
   CREATE_DESAFIO,
   DELETE_DESAFIO,
   UPDATE_DESAFIO,
@@ -25,6 +26,17 @@ export const getDesafio = (id) => async (dispatch) => {
   });
 };
 
+export const getDesafioByTurma = () => async (dispatch) => {
+  const res = await axios.get(
+    `http://localhost:5000/api/v1/desafios/professores/turma`
+  );
+
+  return dispatch({
+    type: GET_DESAFIOS_BY_TURMA,
+    payload: res.data,
+  });
+};
+
 export const createDesafio = (novoDesafio) => async (dispatch) => {
   const res = await axios.post(
     "http://localhost:5000/api/v1/desafios",
@@ -38,14 +50,17 @@ export const createDesafio = (novoDesafio) => async (dispatch) => {
 };
 
 export const updateDesafio = (updateDesafio) => async (dispatch) => {
+
   const res = axios.put(
     `http://localhost:5000/api/v1/desafios/${updateDesafio._id}`,
     updateDesafio
   );
 
+  const data = await res;
+
   return dispatch({
     type: UPDATE_DESAFIO,
-    payload: res.data,
+    payload: data.data.data,
   });
 };
 

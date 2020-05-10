@@ -3,17 +3,38 @@
   box-sizing: border-box;
 }
 
-// Login/Register Section
-#login-section,
-#register-section {
-  margin-top: 4.5rem;
+html,
+body,
+#root,
+.App {
+  height: 100%;
+}
+
+.text-yellow {
+  color: #f8c084 !important;
+}
+
+// Login Section
+#login-section {
+  background-color: #f9f1eb;
+}
+
+.login-left-col {
+  position: relative;
+  top: 25%;
 }
 
 #section-home,
-#section-ranking,
 #section-desafios,
-#section-conquistas {
-  background-size: cover;
+#section-conquistas,
+.carousel-image-one,
+.carousel-image-two,
+.carousel-image-three,
+.carousel-image-four,
+.carousel-image-five,
+.carousel-image-six {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   background-position: center;
 }
 
@@ -21,13 +42,90 @@
   &-home {
     background-image: url("../images/castle.jpg");
   }
-  &-ranking {
-    background-image: url("../images/ranking.jpg");
-  }
   &-conquistas {
     background-image: url("../images/armory.jpg");
   }
   &-desafios {
     background-image: url("../images/desafios.jpg");
+  }
+}
+
+.carousel-image {
+  &-one {
+    background-image: url("../images/castelo.png");
+  }
+  &-two {
+    background-image: url("../images/castelo2.png");
+  }
+  &-three {
+    background-image: url("../images/desafio.png");
+  }
+  &-four {
+    background-image: url("../images/batalha.png");
+  }
+  &-five {
+    background-image: url("../images/honra.png");
+  }
+  &-six {
+    background-image: url("../images/tesouro.png");
+  }
+}
+
+.btn-hover-login:hover {
+  background-color: #3f3f3f !important;
+}
+
+// Home
+.bg-opacity {
+  &-avisos {
+    height: 75%;
+  }
+
+  &-update-profile {
+    height: 62%;
+  }
+}
+
+.bg-opacity-avisos,
+.bg-opacity-update-profile {
+  position: relative;
+  margin: 3rem 8rem 0;
+  opacity: 0.99;
+  border: 1px solid black;
+  border-radius: 15px;
+
+  &:after {
+    content: "";
+    background-color: white;
+    border-radius: 15px;
+    opacity: 0.3;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  .quadro-avisos,
+  .form-update-profile {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+  }
+}
+
+.cog-icon {
+  position: absolute !important;
+  right: 1%;
+  top: 1%;
+  z-index: 4;
+
+  div p {
+    cursor: pointer;
+
+    &:hover {
+      color: red;
+    }
   }
 }

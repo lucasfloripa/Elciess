@@ -4,6 +4,8 @@ import {
   DELETE_ALUNO,
   UPDATE_ALUNO,
   CREATE_ALUNO,
+  BOUND_ALUNO_DESAFIO,
+  UNBOUND_ALUNO_DESAFIO,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -37,8 +39,20 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         alunos: state.alunos.map((aluno) =>
-          aluno.id === action.payload.id ? (aluno = action.payload) : aluno
+          aluno.id === action.payload.data._id
+            ? (aluno = action.payload)
+            : aluno
         ),
+      };
+    case BOUND_ALUNO_DESAFIO:
+      return {
+        ...state,
+        aluno: action.payload,
+      };
+    case UNBOUND_ALUNO_DESAFIO:
+      return {
+        ...state,
+        aluno: action.payload,
       };
     default:
       return state;

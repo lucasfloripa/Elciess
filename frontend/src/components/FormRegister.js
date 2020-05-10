@@ -1,10 +1,9 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
 import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
 import * as yup from "yup";
 import PropTypes from "prop-types";
 
-function FormRegister(props) {
+function FormRegister({ onRegister, onToggleForm }) {
   return (
     <Fragment>
       <Formik
@@ -17,14 +16,16 @@ function FormRegister(props) {
         }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          if (values.senha === values.confirmaSenha) {
-            props.onRegister(values);
-          }
+          onRegister(values);
         }}
       >
         <FormikForm>
           <div className="form-group">
-            <Field as="select" name="tipoUsuario" className="custom-select">
+            <Field
+              as="select"
+              name="tipoUsuario"
+              className="custom-select border border-dark"
+            >
               <option value=""></option>
               <option value="aluno">Aluno</option>
               <option value="professor">Professor</option>
@@ -39,7 +40,11 @@ function FormRegister(props) {
             />
           </div>
           <div className="form-group">
-            <Field name="nome" className="form-control" placeholder="Nome" />
+            <Field
+              name="nome"
+              className="form-control border border-dark"
+              placeholder="Nome"
+            />
             <ErrorMessage
               name="nome"
               render={(message) => (
@@ -50,7 +55,11 @@ function FormRegister(props) {
             />
           </div>
           <div className="form-group">
-            <Field name="email" className="form-control" placeholder="Email" />
+            <Field
+              name="email"
+              className="form-control border border-dark"
+              placeholder="Email"
+            />
             <ErrorMessage
               name="email"
               render={(message) => (
@@ -64,7 +73,7 @@ function FormRegister(props) {
             <Field
               type="password"
               name="senha"
-              className="form-control"
+              className="form-control border border-dark"
               placeholder="Senha"
             />
             <ErrorMessage
@@ -80,8 +89,8 @@ function FormRegister(props) {
             <Field
               type="password"
               name="confirmaSenha"
-              className="form-control"
-              placeholder="Confirma Senha"
+              className="form-control border border-dark"
+              placeholder="Confirmar Senha"
             />
             <ErrorMessage
               name="confirmaSenha"
@@ -92,23 +101,29 @@ function FormRegister(props) {
               )}
             />
           </div>
-          <button type="submit" className="btn btn-outline-success btn-block">
+          <button
+            type="submit"
+            className="btn btn-block text-yellow border border-dark bg-white btn-hover-login"
+          >
             Registrar
           </button>
           <div className="text-center">ou</div>
         </FormikForm>
       </Formik>
-      <Link to={"/login"} className="text-decoration-none">
-        <button type="button" className="btn btn-outline-secondary btn-block">
-          Voltar
-        </button>
-      </Link>
+      <button
+        onClick={onToggleForm}
+        type="button"
+        className="btn btn-block text-yellow border border-dark bg-white btn-hover-login"
+      >
+        Voltar
+      </button>
     </Fragment>
   );
 }
 
 FormRegister.propTypes = {
   onRegister: PropTypes.func.isRequired,
+  onToggleForm: PropTypes.func.isRequired,
 };
 
 const validationSchema = yup.object({

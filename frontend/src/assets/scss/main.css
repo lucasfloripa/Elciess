@@ -3,25 +3,42 @@
           box-sizing: border-box;
 }
 
-#login-section,
-#register-section {
-  margin-top: 4.5rem;
+html,
+body,
+#root,
+.App {
+  height: 100%;
+}
+
+.text-yellow {
+  color: #f8c084 !important;
+}
+
+#login-section {
+  background-color: #f9f1eb;
+}
+
+.login-left-col {
+  position: relative;
+  top: 25%;
 }
 
 #section-home,
-#section-ranking,
 #section-desafios,
-#section-conquistas {
-  background-size: cover;
+#section-conquistas,
+.carousel-image-one,
+.carousel-image-two,
+.carousel-image-three,
+.carousel-image-four,
+.carousel-image-five,
+.carousel-image-six {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   background-position: center;
 }
 
 #section-home {
   background-image: url("../images/castle.jpg");
-}
-
-#section-ranking {
-  background-image: url("../images/ranking.jpg");
 }
 
 #section-conquistas {
@@ -30,5 +47,88 @@
 
 #section-desafios {
   background-image: url("../images/desafios.jpg");
+}
+
+.carousel-image-one {
+  background-image: url("../images/castelo.png");
+}
+
+.carousel-image-two {
+  background-image: url("../images/castelo2.png");
+}
+
+.carousel-image-three {
+  background-image: url("../images/desafio.png");
+}
+
+.carousel-image-four {
+  background-image: url("../images/batalha.png");
+}
+
+.carousel-image-five {
+  background-image: url("../images/honra.png");
+}
+
+.carousel-image-six {
+  background-image: url("../images/tesouro.png");
+}
+
+.btn-hover-login:hover {
+  background-color: #3f3f3f !important;
+}
+
+.bg-opacity-avisos {
+  height: 75%;
+}
+
+.bg-opacity-update-profile {
+  height: 62%;
+}
+
+.bg-opacity-avisos,
+.bg-opacity-update-profile {
+  position: relative;
+  margin: 3rem 8rem 0;
+  opacity: 0.99;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.bg-opacity-avisos:after,
+.bg-opacity-update-profile:after {
+  content: "";
+  background-color: white;
+  border-radius: 15px;
+  opacity: 0.3;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.bg-opacity-avisos .quadro-avisos,
+.bg-opacity-avisos .form-update-profile,
+.bg-opacity-update-profile .quadro-avisos,
+.bg-opacity-update-profile .form-update-profile {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+}
+
+.cog-icon {
+  position: absolute !important;
+  right: 1%;
+  top: 1%;
+  z-index: 4;
+}
+
+.cog-icon div p {
+  cursor: pointer;
+}
+
+.cog-icon div p:hover {
+  color: red;
 }
 /*# sourceMappingURL=main.css.map */

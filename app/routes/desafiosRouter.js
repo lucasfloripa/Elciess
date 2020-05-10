@@ -5,6 +5,7 @@ const Desafio = require("../models/Desafio");
 const {
   getDesafio,
   getDesafios,
+  getDesafiosByTurma,
   createDesafio,
   updateDesafio,
   deleteDesafio,
@@ -28,5 +29,7 @@ router
   .get(protect, getDesafio)
   .put(protect, updateDesafio)
   .delete(protect, deleteDesafio);
+
+router.route("/professores/turma").get(protect, getDesafiosByTurma);
 
 module.exports = router;

@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // Pages
 import Login from "./pages/Login";
-import Register from "./pages/Register";
 import Dashboard from "./pages/dashboard";
 
 // Authentication
@@ -19,6 +18,17 @@ import { LOGIN } from "./store/actions/types";
 import requireAuth from "./utils/requireAuth";
 import noRequireAuth from "./utils/noRequireAuth";
 
+// Font Awesome
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faCog,
+  faCogs,
+  faCheckCircle,
+  faMinusCircle,
+  faBox,
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faCog, faCogs, faCheckCircle, faMinusCircle, faBox);
+
 // Set Authorization
 if (localStorage.getItem("token")) {
   setAuthorizationToken(JSON.parse(localStorage.getItem("token")));
@@ -32,7 +42,6 @@ function App() {
         <div className="App">
           <Switch>
             <Route exact path="/login" component={noRequireAuth(Login)} />
-            <Route exact path="/register" component={noRequireAuth(Register)} />
             <Route exact path="/dashboard" component={requireAuth(Dashboard)} />
           </Switch>
         </div>

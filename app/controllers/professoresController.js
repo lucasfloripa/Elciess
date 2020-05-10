@@ -5,9 +5,22 @@ const Professor = require("../models/Professor"),
 
 // @desc      Get todos professores
 // @route     GET /api/v1/professores
+// @route     GET /api/v1/turmas/:turmaId/professores
 // @access    Private
 exports.getProfessores = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+  const { turmaId } = req.usuario.turma;
+
+  if (turmaId) {
+    const professores = await Professor.find({ turmas: turmaId }).populate({
+      path: "turma",
+      select: "codigo",
+    });
+    res
+      .status(200)
+      .json({ sucesso: true, contagem: professores.length, data: professores });
+  } else {
+    res.status(200).json(res.advancedResults);
+  }
 });
 
 // @desc      Get único professor
@@ -16,7 +29,7 @@ exports.getProfessores = asyncHandler(async (req, res, next) => {
 exports.getProfessor = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
-  const professor = await Professor.findById(id).populate("desafios");
+  const professor = await Professor.findById(id);
 
   if (!professor) {
     return next(

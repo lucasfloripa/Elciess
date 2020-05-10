@@ -1,6 +1,7 @@
 import {
   GET_PROFESSOR,
   GET_PROFESSORES,
+  GET_PROFESSORES_BY_TURMA,
   DELETE_PROFESSOR,
   UPDATE_PROFESSOR,
   CREATE_PROFESSOR,
@@ -19,6 +20,11 @@ export default function (state = INITIAL_STATE, action) {
         professor: action.payload,
       };
     case GET_PROFESSORES:
+      return {
+        ...state,
+        professores: action.payload,
+      };
+    case GET_PROFESSORES_BY_TURMA:
       return {
         ...state,
         professores: action.payload,

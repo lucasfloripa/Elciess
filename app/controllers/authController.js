@@ -43,21 +43,25 @@ exports.logout = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/auth/me
 // @acess     Private
 exports.getMe = asyncHandler(async (req, res, next) => {
-  const { id } = req.usuario;
+  const { _id } = req.usuario;
 
   let usuario;
 
   if (req.usuario.tipoUsuario === "Aluno") {
-    usuario = await Usuarios.findById(id).populate({
-      path: "turma",
-      select: "codigo",
-    });
+    usuario = await Usuarios.findById(_id)
+      .populate({
+        path: "desafios",
+        populate: {
+          path: "professor",
+        },
+      })
+      .select("+senha");
   } else {
-    usuario = await Usuarios.findById(id);
+    usuario = await Usuarios.findById(_id);
   }
 
   if (!usuario) {
-    return next(new ErrorResponse(`Usuário com id ${id} não encontrado`, 404));
+    return next(new ErrorResponse(`Usuário com id ${_id} não encontrado`, 404));
   }
 
   res.status(200).json({ sucesso: true, data: usuario });
