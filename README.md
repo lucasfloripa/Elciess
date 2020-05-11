@@ -12,6 +12,7 @@ Front-end
   - Bootstrap
   - Formik/Yup
   - Axios
+  - SaSS
    
 Back-end
   - NodeJS
@@ -24,7 +25,8 @@ Back-end
 - [x] Login/Register
 - [x] Routes protection
 - [x] Authentication
+- [ ] Jest
 - [ ] Duck Pattern
 - [ ] TypeScript
 - [ ] React Hooks
-- [ ] Resposível
+- [ ] Midia Queries
