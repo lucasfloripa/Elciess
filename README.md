@@ -1,8 +1,11 @@
-# Elciess
-Ambiente de gamificação para estudos (Em desenvolvimento)
+# Elciess 
+### Ambiente gamificado para estudos :video_game::books::trophy: (Em desenvolvimento)
 
-#### Venho trabalhando nesse projeto diariamente para poder praticar o que estou estudando.
-#### Tecnologias e libs(as com maior destaque) usadas neste projeto.
+### Venho trabalhando nesse projeto diariamente para poder praticar o que venho estudando.
+
+![alt text](https://github.com/lucasfloripa/Elciess/blob/master/frontend/src/assets/images/castelo.png?raw=true)
+
+## Technologies :computer:
 Front-end
   - React
   - Redux
@@ -17,14 +20,11 @@ Back-end
   - MongoDB
   - JsonWebToken
 
-## O que já está totalmente pronto
-1. Login/Register
-2. Proteção de rotas
-3. Autenticação de usuário
-  
-## O que ainda pretendo fazer
-1. Duck Pattern (Redux Pattern)
-2. TypeScript
-3. React Hooks
-4. Fazer como app, React Native
-5. Responsibilidade
+## To Do List :heavy_check_mark:
+- [x] Login/Register
+- [x] Routes protection
+- [x] Authentication
+- [ ] Duck Pattern
+- [ ] TypeScript
+- [ ] React Hooks
+- [ ] Resposível
