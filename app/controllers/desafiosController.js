@@ -1,7 +1,9 @@
 const Desafio = require("../models/Desafio"),
   Professor = require("../models/Professor"),
   asyncHandler = require("../middlewares/asyncHandler"),
-  ErrorResponse = require("../utils/errorResponse");
+  ErrorResponse = require("../utils/errorResponse"),
+  Grid = require("gridfs-stream"),
+  mongoose = require("mongoose");
 
 // @desc      Get all desafios
 // @route     GET /api/v1/desafios
@@ -28,16 +30,13 @@ exports.getDesafios = asyncHandler(async (req, res, next) => {
 // @acess     Private
 exports.getDesafio = asyncHandler(async (req, res, next) => {
   const { id } = req.body;
-
   const desafio = await Desafio.findById(id).populate({
     path: "professor",
     select: "nome disciplina",
   });
-
   if (!desafio) {
     return next(new ErrorResponse(`Desafio com id ${id} não encontrado`, 404));
   }
-
   res.status(200).json({ sucesso: true, data: desafio });
 });
 
@@ -47,22 +46,14 @@ exports.getDesafio = asyncHandler(async (req, res, next) => {
 exports.getDesafiosByTurma = asyncHandler(async (req, res, next) => {
   const idTurma = req.usuario.turma;
 
-  const professores = await Professor.find({ turmas: idTurma });
+  const desafios = await Desafio.find({ turma: idTurma }).populate({
+    path: "professor",
+    select: "nome disciplina",
+  });
 
-  if (!professores) {
-    return next(new ErrorResponse("Professores não encontrados", 404));
+  if (!desafios) {
+    return next(new ErrorResponse("Desafios não encontrados", 404));
   }
-
-  const professoresIds = professores.map((professor) => professor._id);
-
-  const desafios = await Desafio.find()
-    .where("professor")
-    .in(professoresIds)
-    .populate({
-      path: "professor",
-      select: "nome disciplina",
-    })
-    .exec();
 
   res
     .status(200)
@@ -107,7 +98,6 @@ exports.updateDesafio = asyncHandler(async (req, res, next) => {
     runValidators: true,
   });
 
-
   res.status(200).json({ sucesso: true, data: updatedDesafio });
 });
 
@@ -126,4 +116,64 @@ exports.deleteDesafio = asyncHandler(async (req, res, next) => {
   await desafioToDelete.remove();
 
   res.status(200).json({ sucesso: true, data: {} });
+});
+
+// @desc      Upload desafio
+// @route     POST /api/v1/desafios/upload/:id
+// @access    Private
+exports.uploadFileDesafio = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  let desafio = await Desafio.findById(id);
+
+  if (!desafio) {
+    return next(new ErrorResponse(`Desafio de id ${id} não encontrado`, 404));
+  }
+
+  desafio = await Desafio.findByIdAndUpdate(
+    id,
+    {
+      $push: { arquivoId: req.file.id, entregue: req.usuario._id },
+    },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({ sucesso: true, data: desafio });
+});
+
+// @desc      Download desafio
+// @route     GET /api/v1/desafios/download/:id
+// @access    Private
+exports.downloadFileDesafio = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  const desafio = await Desafio.findById(id);
+
+  if (!desafio) {
+    return next(new ErrorResponse(`Desafio de id ${id} não encontrado`, 404));
+  }
+
+  const conn = await mongoose.connect(process.env.MONGO_URI);
+  const gfs = Grid(conn.connection.db, mongoose.mongo);
+  gfs.collection("uploads");
+
+  const fileId = new mongoose.mongo.ObjectId(desafio.arquivoId);
+
+  gfs.files.findOne({ _id: fileId }, (err, file) => {
+    console.log(file);
+    res.set("Content-Type", file.contentType);
+    res.set(
+      "Content-Disposition",
+      'attachment; filename="' + file.filename + '"'
+    );
+
+    //Check Files
+    if (!file || file.length === 0) {
+      return next(new ErrorResponse("Não existe arquivo", 404));
+    }
+
+    const readstream = gfs.createReadStream(file.filename);
+
+    readstream.pipe(res);
+  });
 });

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
 import ReactFullPage from "@fullpage/react-fullpage";
 import { connect } from "react-redux";
+
+// Actions
 import { setUsuarioAtual, logout } from "../../store/actions/authActions";
 import {
   updateAluno,
@@ -11,31 +12,40 @@ import {
 } from "../../store/actions/alunoActions";
 import {
   getDesafioByTurma,
-  updateDesafio,
+  uploadFileDesafio,
 } from "../../store/actions/desafioActions";
+import { getAvisosByTurmaAluno } from "../../store/actions/avisoActions";
+import {
+  notifyUser,
+  cleanNotifyUser,
+} from "../../store/actions/notificacaoActions";
+import { updateSenhaUsuario } from "../../store/actions/usuarioActions";
 
 // Sections
-import { Home, Conquistas, Desafios } from "./sections";
+import { Home, Conquistas, Desafios } from "../index";
 
 // Components
-import ModalDesafiosDisponiveis from "../../components/ModalDesafiosDisponiveis";
-import ModalDesafiosAceitos from "../../components/ModalDesafiosAceitos";
+import ModalDesafiosDisponiveis from "./components/ModalDesafiosDisponiveis";
+import ModalDesafiosAceitos from "./components/ModalDesafiosAceitos";
+import ModalNoticiasAvisos from "./components/ModalNoticiasAvisos";
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       desafio: {},
+      aviso: {},
       desafiosDisponiveis: [],
       toggleInfoEdit: false,
       toggleSenhaEdit: false,
       showModalDesafiosDisponiveis: false,
       showModalDesafiosAceitos: false,
+      showModalNoticiasAvisos: false,
     };
     this.handleLogout = this.handleLogout.bind(this);
     this.handleUpdateAluno = this.handleUpdateAluno.bind(this);
-    this.handleStatusDesafio = this.handleStatusDesafio.bind(this);
     this.handleUpdateSenhaAluno = this.handleUpdateSenhaAluno.bind(this);
+    this.handleUploadFileDesafio = this.handleUploadFileDesafio.bind(this);
     this.handleToggleSenhaEdit = this.handleToggleSenhaEdit.bind(this);
     this.handleToggleInfoEdit = this.handleToggleInfoEdit.bind(this);
     this.handleToggleModalDesafiosDisponiveis = this.handleToggleModalDesafiosDisponiveis.bind(
@@ -44,10 +54,16 @@ class index extends Component {
     this.handleToggleModalDesafiosAceitos = this.handleToggleModalDesafiosAceitos.bind(
       this
     );
+    this.handleToggleModalNoticiaAviso = this.handleToggleModalNoticiaAviso.bind(
+      this
+    );
     this.handleOpenModalDesafioDisponivel = this.handleOpenModalDesafioDisponivel.bind(
       this
     );
     this.handleOpenModalDesafioAceito = this.handleOpenModalDesafioAceito.bind(
+      this
+    );
+    this.handleOpenModalNoticiaAviso = this.handleOpenModalNoticiaAviso.bind(
       this
     );
     this.handleBoundAlunoDesafio = this.handleBoundAlunoDesafio.bind(this);
@@ -57,7 +73,14 @@ class index extends Component {
   async componentDidMount() {
     await this.props.setUsuarioAtual();
     await this.props.getDesafioByTurma();
+    await this.props.getAvisosByTurmaAluno();
     this.handleDesafiosDisponiveis();
+  }
+
+  componentDidUpdate() {
+    if (this.props.notificacao.mensagem !== null) {
+      setTimeout(() => this.props.cleanNotifyUser(), 5000);
+    }
   }
 
   handleLogout() {
@@ -66,15 +89,15 @@ class index extends Component {
 
   handleUpdateAluno(values) {
     this.props.updateAluno(values);
+    this.props.notifyUser("Edição realizada", "sucesso");
   }
 
-  handleUpdateSenhaAluno({ senhaAtual, novaSenha }) {
-    // To Do
-    // this.props.updateSenhaAluno(senhaAtual, novaSenha);
-  }
-
-  handleStatusDesafio(desafio) {
-    this.props.updateDesafio(desafio);
+  handleUpdateSenhaAluno({ senhaAtual, novaSenha, confirmaNovaSenha }) {
+    if (novaSenha !== confirmaNovaSenha) {
+      this.props.notifyUser("Confirmar senha inválido", "erro");
+    } else {
+      this.props.updateSenhaUsuario(senhaAtual, novaSenha);
+    }
   }
 
   handleToggleModalDesafiosDisponiveis() {
@@ -82,10 +105,16 @@ class index extends Component {
       showModalDesafiosDisponiveis: !this.state.showModalDesafiosDisponiveis,
     });
   }
-  
+
   handleToggleModalDesafiosAceitos() {
     this.setState({
       showModalDesafiosAceitos: !this.state.showModalDesafiosAceitos,
+    });
+  }
+
+  handleToggleModalNoticiaAviso() {
+    this.setState({
+      showModalNoticiasAvisos: !this.state.showModalNoticiasAvisos,
     });
   }
 
@@ -119,6 +148,10 @@ class index extends Component {
     this.setState({ desafio, showModalDesafiosAceitos: true });
   }
 
+  handleOpenModalNoticiaAviso(aviso) {
+    this.setState({ aviso, showModalNoticiasAvisos: true });
+  }
+
   handleBoundAlunoDesafio(desafioId) {
     this.props.boundAlunoDesafio(desafioId);
   }
@@ -139,15 +172,26 @@ class index extends Component {
     this.setState({ desafiosDisponiveis });
   }
 
+  handleUploadFileDesafio(desafioId) {
+    this.props.uploadFileDesafio(desafioId);
+  }
+
   render() {
-    const { usuarioLogado, desafios } = this.props,
+    const {
+        usuarioLogado,
+        desafios,
+        avisos,
+        notificacao: { mensagemTipo, mensagem },
+      } = this.props,
       {
         toggleInfoEdit,
         toggleSenhaEdit,
         showModalDesafiosDisponiveis,
         showModalDesafiosAceitos,
+        showModalNoticiasAvisos,
         desafiosDisponiveis,
         desafio,
+        aviso,
       } = this.state;
 
     if (usuarioLogado && desafios) {
@@ -160,22 +204,28 @@ class index extends Component {
               <ReactFullPage.Wrapper>
                 <Home
                   usuarioLogado={usuarioLogado}
+                  avisos={avisos}
                   onLogout={this.handleLogout}
                   onUpdateAluno={this.handleUpdateAluno}
                   onUpdateSenhaAluno={this.handleUpdateSenhaAluno}
                   onToggleEditInfo={this.handleToggleInfoEdit}
                   onToggleEditSenha={this.handleToggleSenhaEdit}
+                  onShowModalNoticiaAviso={this.handleOpenModalNoticiaAviso}
                   toggleInfoEditStatus={toggleInfoEdit}
                   toggleSenhaEditStatus={toggleSenhaEdit}
+                  alertaTipo={mensagemTipo}
+                  alertaMensagem={mensagem}
                 />
-                <Conquistas />
+                {/* <Conquistas /> */}
                 <Desafios
+                  usuarioId={usuarioLogado._id}
                   desafiosDoAluno={usuarioLogado.desafios}
                   desafiosDisponiveis={desafiosDisponiveis}
-                  onShowModalDesafioDisponivel={this.handleOpenModalDesafioDisponivel}
+                  onShowModalDesafioDisponivel={
+                    this.handleOpenModalDesafioDisponivel
+                  }
                   onShowModalDesafioAceito={this.handleOpenModalDesafioAceito}
                   onUnboundAlunoDesafio={this.handleUnboundAlunoDesafio}
-                  onChangeStatusDesafio={this.handleStatusDesafio}
                 />
                 <ModalDesafiosDisponiveis
                   showModal={showModalDesafiosDisponiveis}
@@ -186,8 +236,14 @@ class index extends Component {
                 <ModalDesafiosAceitos
                   showModal={showModalDesafiosAceitos}
                   desafio={desafio}
+                  onUploadFileDesafio={this.handleUploadFileDesafio}
                   onToggleShowModal={this.handleToggleModalDesafiosAceitos}
                   onUnboundAlunoDesafio={this.handleUnboundAlunoDesafio}
+                />
+                <ModalNoticiasAvisos
+                  aviso={aviso}
+                  showModal={showModalNoticiasAvisos}
+                  onToggleShowModal={this.handleToggleModalNoticiaAviso}
                 />
               </ReactFullPage.Wrapper>
             );
@@ -203,18 +259,24 @@ class index extends Component {
 const mapStateToProps = (state) => ({
   usuarioLogado: state.auth.usuario.data,
   desafios: state.desafios.desafios.data,
+  avisos: state.aviso.avisos,
+  notificacao: state.notificacao,
 });
 
 index.propTypes = {
   usuario: PropTypes.object,
   desafios: PropTypes.array,
+  avisos: PropTypes.array,
   setUsuarioAtual: PropTypes.func.isRequired,
   getDesafioByTurma: PropTypes.func.isRequired,
   updateAluno: PropTypes.func.isRequired,
-  updateDesafio: PropTypes.func.isRequired,
   boundAlunoDesafio: PropTypes.func.isRequired,
   unboundAlunoDesafio: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+  getAvisosByTurmaAluno: PropTypes.func.isRequired,
+  notifyUser: PropTypes.func.isRequired,
+  cleanNotifyUser: PropTypes.func.isRequired,
+  updateSenhaUsuario: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, {
@@ -224,5 +286,9 @@ export default connect(mapStateToProps, {
   getDesafioByTurma,
   boundAlunoDesafio,
   unboundAlunoDesafio,
-  updateDesafio,
+  uploadFileDesafio,
+  getAvisosByTurmaAluno,
+  notifyUser,
+  cleanNotifyUser,
+  updateSenhaUsuario,
 })(index);

@@ -2,7 +2,7 @@ const express = require("express"),
   dotenv = require("dotenv"),
   morgan = require("morgan"),
   cors = require("cors"),
-  multer = require("multer"),
+  errorHandler = require("./middlewares/error"),
   connectDB = require("./config/db");
 
 const routes = ({
@@ -15,7 +15,7 @@ const routes = ({
   professoresRouter,
   turmasRouter,
   usuariosRouter,
-  avatarRouter,
+  avisosRouter,
 } = require("./routes"));
 
 // Carregando variáveis de sistema
@@ -37,16 +37,6 @@ if (NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// Multer
-// app.use(
-//   multer({
-//     dest: "./uploads/",
-//     rename: function (fieldname, filename) {
-//       return filename;
-//     },
-//   })
-// );
-
 // Cors
 app.use(cors());
 
@@ -59,8 +49,10 @@ app.use("/api/v1/professoresTurmas", professoresTurmasRouter);
 app.use("/api/v1/alunosDesafios", alunosDesafiosRouter);
 app.use("/api/v1/desafios", desafiosRouter);
 app.use("/api/v1/usuarios", usuariosRouter);
+app.use("/api/v1/avisos", avisosRouter);
 app.use("/api/v1/admin", adminRouter);
-app.use("/api/v1/avatares", avatarRouter);
+
+app.use(errorHandler);
 
 const server = app.listen(
   PORT,

@@ -19,7 +19,7 @@ router.use("/:turmaId/professores", professoresRouter);
 
 router
   .route("/")
-  .get(protect, advancedResults(Turma, null), getTurmas)
+  .get(advancedResults(Turma, null), getTurmas)
   .post(protect, createTurma);
 router
   .route("/:id")

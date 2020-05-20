@@ -17,7 +17,6 @@
     "font-awesome": "^4.7.0",
     "formik": "^2.1.4",
     "jquery": "^3.5.0",
-    "mdbreact": "^4.26.0",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

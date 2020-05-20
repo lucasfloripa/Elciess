@@ -7,7 +7,7 @@ const desafiosRouter = require("./desafiosRouter");
 const authRouter = require("./authRouter");
 const alunosDesafiosRouter = require("./alunosDesafiosRouter");
 const professoresTurmasRouter = require("./professoresTurmasRouter");
-const avatarRouter = require("./avatarRouter");
+const avisosRouter = require("./avisosRouter");
 
 module.exports = {
   usuariosRouter,
@@ -19,5 +19,5 @@ module.exports = {
   authRouter,
   alunosDesafiosRouter,
   professoresTurmasRouter,
-  avatarRouter,
+  avisosRouter,
 };

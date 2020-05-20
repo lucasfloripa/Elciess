@@ -6,6 +6,7 @@ import professorReducer from "./professorReducer";
 import turmaReducer from "./turmaReducer";
 import desafioReducer from "./desafioReducer";
 import notificacaoReducer from "./notificacaoReducer";
+import avisoReducer from "./avisoReducer";
 
 export default combineReducers({
   usuario: usuarioReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   turma: turmaReducer,
   desafios: desafioReducer,
   notificacao: notificacaoReducer,
+  aviso: avisoReducer,
 });

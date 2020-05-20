@@ -51,12 +51,13 @@ UsuarioSchema.pre("save", async function () {
 
 // Encrypt password on update
 UsuarioSchema.methods.updateSenha = async function (newPassword) {
+  console.log("1");
   const salt = await bcrypt.genSalt(10);
-  this.senha = await bcrypt.hash(newPassword, salt);
+  return await bcrypt.hash(newPassword, salt);
 };
 
 // Match user entered password to hashed password in database
-UsuarioSchema.methods.matchPassoword = async function (enteredPassword) {
+UsuarioSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.senha);
 };
 

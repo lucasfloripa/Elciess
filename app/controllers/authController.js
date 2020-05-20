@@ -20,7 +20,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   }
 
   // Check if password matches
-  const isMatch = await usuario.matchPassoword(senha);
+  const isMatch = await usuario.matchPassword(senha);
 
   if (!isMatch) {
     return next(new ErrorResponse("Senha inválida", 401));

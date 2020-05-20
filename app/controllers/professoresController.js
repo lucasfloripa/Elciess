@@ -8,19 +8,19 @@ const Professor = require("../models/Professor"),
 // @route     GET /api/v1/turmas/:turmaId/professores
 // @access    Private
 exports.getProfessores = asyncHandler(async (req, res, next) => {
-  const { turmaId } = req.usuario.turma;
+  // const { turmaId } = req.usuario.turma;
 
-  if (turmaId) {
-    const professores = await Professor.find({ turmas: turmaId }).populate({
-      path: "turma",
-      select: "codigo",
-    });
-    res
-      .status(200)
-      .json({ sucesso: true, contagem: professores.length, data: professores });
-  } else {
+  // if (turmaId) {
+  //   const professores = await Professor.find({ turmas: turmaId }).populate({
+  //     path: "turma",
+  //     select: "codigo",
+  //   });
+  //   res
+  //     .status(200)
+  //     .json({ sucesso: true, contagem: professores.length, data: professores });
+  // } else {
     res.status(200).json(res.advancedResults);
-  }
+  // }
 });
 
 // @desc      Get único professor

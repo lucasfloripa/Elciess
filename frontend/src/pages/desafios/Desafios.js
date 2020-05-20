@@ -2,14 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Components
-import TableDesafiosDisponiveis from "../../../components/TableDesafiosDisponiveis";
-import TableDesafiosAceitos from "../../../components/TableDesafiosAceitos";
+import TableDesafiosDisponiveis from "./components/TableDesafiosDisponiveis";
+import TableDesafiosAceitos from "./components/TableDesafiosAceitos";
 
 function Desafios({
+  usuarioId,
   desafiosDoAluno,
   desafiosDisponiveis,
   onShowModalDesafioDisponivel,
-  onShowModalDesafioAceito
+  onShowModalDesafioAceito,
 }) {
   return (
     <section id="section-desafios" className="section">
@@ -24,6 +25,7 @@ function Desafios({
           </div>
           <div className="col-md-6 p-0">
             <TableDesafiosAceitos
+              usuarioId={usuarioId}
               desafiosDoAluno={desafiosDoAluno}
               onShowModal={onShowModalDesafioAceito}
             />
@@ -35,11 +37,11 @@ function Desafios({
 }
 
 Desafios.propTypes = {
+  usuarioId: PropTypes.string.isRequired,
   desafiosDoAluno: PropTypes.array.isRequired,
   desafiosDisponiveis: PropTypes.array.isRequired,
   onShowModalDesafioDisponivel: PropTypes.func.isRequired,
   onShowModalDesafioAceito: PropTypes.func.isRequired,
-  
 };
 
 export default Desafios;

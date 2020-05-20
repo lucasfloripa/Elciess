@@ -25,7 +25,7 @@ exports.getUsuario = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Delete usuario
-// @route     PUT /api/v1/usuarios/:id
+// @route     DELETE /api/v1/usuarios/:id
 // @access    Private
 exports.deleteUsuario = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
@@ -39,4 +39,37 @@ exports.deleteUsuario = asyncHandler(async (req, res, next) => {
   await usuarioToDelete.remove();
 
   res.status(200).json({ sucesso: true, data: {} });
+});
+
+// @desc      Update senha usuario
+// @route     PUT /api/v1/usuarios/usuarioAtual
+// @access    Private
+exports.updateSenhaUsuario = asyncHandler(async (req, res, next) => {
+  const { _id } = req.usuario;
+  const { senhaAtual, novaSenha } = req.body;
+
+  let usuario = await Usuarios.findById(_id).select("+senha");
+
+  if (!usuario) {
+    return next(new ErrorResponse(`Usuário com id ${_id} não encontrado`, 404));
+  }
+
+  const isMatch = await usuario.matchPassword(senhaAtual);
+
+  if (!isMatch) {
+    return next(new ErrorResponse("Senha atual inválida", 401));
+  }
+
+  const hashedNovoSenha = await usuario.updateSenha(novaSenha);
+
+  usuario = await Usuarios.findByIdAndUpdate(
+    _id,
+    { senha: hashedNovoSenha },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(200).json({ mensagem: "Senha alterada!", mensagemTipo: "sucesso" });
 });

@@ -1,12 +1,19 @@
 import React from "react";
+import Alert from "../../../utils/alert";
 import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
 import * as yup from "yup";
 import PropTypes from "prop-types";
 
-function FormEditSenha({ onUpdateSenhaAluno, onToggleEditSenha }) {
+function FormEditSenha({
+  onUpdateSenhaAluno,
+  onToggleEditSenha,
+  alertaTipo,
+  alertaMensagem,
+}) {
   return (
     <div className="bg-opacity-update-profile">
       <div className="form-update-profile">
+        <h3 className="text-center mt-3">Editar Senha</h3>
         <Formik
           initialValues={{
             senhaAtual: "",
@@ -18,7 +25,7 @@ function FormEditSenha({ onUpdateSenhaAluno, onToggleEditSenha }) {
             onUpdateSenhaAluno(values);
           }}
         >
-          <FormikForm className="px-5 pt-5">
+          <FormikForm className="px-5 pt-3">
             <div className="form-group">
               <Field
                 type="password"
@@ -80,6 +87,9 @@ function FormEditSenha({ onUpdateSenhaAluno, onToggleEditSenha }) {
           >
             Cancelar
           </button>
+          {alertaMensagem ? (
+            <Alert mensagemTipo={alertaTipo} mensagem={alertaMensagem} />
+          ) : null}
         </div>
       </div>
     </div>
@@ -89,6 +99,8 @@ function FormEditSenha({ onUpdateSenhaAluno, onToggleEditSenha }) {
 FormEditSenha.propTypes = {
   onUpdateSenhaAluno: PropTypes.func.isRequired,
   onToggleEditSenha: PropTypes.func.isRequired,
+  alertaTipo: PropTypes.string,
+  alertaMensagem: PropTypes.string,
 };
 
 const validationSchema = yup.object({

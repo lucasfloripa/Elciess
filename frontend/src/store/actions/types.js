@@ -7,6 +7,7 @@ export const SET_USUARIO_ATUAL = "SET_USUARIO_ATUAL";
 export const GET_USUARIOS = "GET_USUARIOS";
 export const GET_USUARIO = "GET_USUARIO";
 export const DELETE_USUARIO = "DELETE_USUARIO";
+export const UPDATE_SENHA_USUARIO = "UPDATE_SENHA_USUARIO";
 
 // Professores Types
 export const GET_PROFESSORES = "GET_PROFESSORES";
@@ -32,6 +33,13 @@ export const DELETE_TURMA = "DELETE_TURMA";
 export const CREATE_TURMA = "CREATE_TURMA";
 export const UPDATE_TURMA = "UPDATE_TURMA";
 
+// Aviso Types
+export const GET_AVISOS = "GET_AVISOS";
+export const GET_AVISOS_BY_TURMA_ALUNO = "GET_AVISOS_BY_TURMA_ALUNO";
+export const DELETE_AVISO = "DELETE_AVISO";
+export const CREATE_AVISO = "CREATE_AVISO";
+export const UPDATE_AVISO = "UPDATE_AVISO";
+
 // Desafio Types
 export const GET_DESAFIOS = "GET_DESAFIOS";
 export const GET_DESAFIOS_BY_TURMA = "GET_DESAFIOS_BY_TURMA";
@@ -39,6 +47,8 @@ export const GET_DESAFIO = "GET_DESAFIO";
 export const DELETE_DESAFIO = "DELETE_DESAFIO";
 export const CREATE_DESAFIO = "CREATE_DESAFIO";
 export const UPDATE_DESAFIO = "UPDATE_DESAFIO";
+export const UPLOAD_FILE_DESAFIO = "UPLOAD_FILE_DESAFIO";
+export const DOWNLOAD_FILE_DESAFIO = "DOWNLOAD_FILE_DESAFIO";
 
 // Notificação Types
 export const NOTIFY_USER = "NOTIFY_USER";

@@ -83,7 +83,9 @@ exports.deleteAlunoDesafioBound = asyncHandler(async (req, res, next) => {
   desafio = await Desafio.findByIdAndUpdate(
     desafioId,
     {
-      alunos: desafio.alunos.filter((aluno) => aluno.toString() !== alunoId),
+      alunos: desafio.alunos.filter(
+        (aluno) => aluno.toString() !== alunoId.toString()
+      ),
     },
     { new: true, runValidators: true }
   );

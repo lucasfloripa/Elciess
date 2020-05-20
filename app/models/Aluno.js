@@ -4,10 +4,11 @@ const Usuarios = require("./Usuarios");
 const Aluno = Usuarios.discriminator(
   "Aluno",
   new mongoose.Schema({
-    nivel: { type: Number },
-    experiencia: { type: Number },
-    titulos: [{ type: String }],
-    turma: { type: mongoose.Schema.ObjectId, ref: "Turma" },
+    turma: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Turma",
+      required: [true, "Por favor informe a turma"],
+    },
     desafios: [
       {
         type: mongoose.Schema.ObjectId,

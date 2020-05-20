@@ -3,8 +3,8 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // Pages
-import Login from "./pages/Login";
-import Dashboard from "./pages/dashboard";
+import Login from "./pages/loginRegister/Login";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 // Authentication
 import setAuthorizationToken from "./utils/setAuthorizationToken";

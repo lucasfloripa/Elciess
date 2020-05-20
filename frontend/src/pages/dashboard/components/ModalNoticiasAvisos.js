@@ -2,12 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactModal from "react-modal";
 
-function ModalDesafiosDisponiveis({
-  showModal,
-  desafio,
-  onUnboundAlunoDesafio,
-  onToggleShowModal,
-}) {
+function ModalNoticiasAvisos({ aviso, showModal, onToggleShowModal }) {
   return (
     <ReactModal
       isOpen={showModal}
@@ -30,9 +25,9 @@ function ModalDesafiosDisponiveis({
       }}
     >
       <div className="text-center">
-        <h2>{desafio.titulo}</h2>
+        <h2>{aviso.assunto}</h2>
         <hr />
-        <p>{desafio.descricao}</p>
+        <p>{aviso.descricao}</p>
         <div className="d-flex justify-content-end">
           <button
             style={{ width: "15%" }}
@@ -43,36 +38,15 @@ function ModalDesafiosDisponiveis({
           >
             Voltar
           </button>
-          <button
-            style={{ width: "15%" }}
-            className="btn btn-outline-danger mr-3"
-            onClick={() => {
-              onUnboundAlunoDesafio(desafio._id);
-              onToggleShowModal();
-            }}
-          >
-            Cancelar
-          </button>
-          <button
-            style={{ width: "15%" }}
-            className="btn btn-outline-success"
-            onClick={() => {
-              onToggleShowModal();
-            }}
-          >
-            Entregar
-          </button>
         </div>
       </div>
     </ReactModal>
   );
 }
 
-ModalDesafiosDisponiveis.propTypes = {
+ModalNoticiasAvisos.propTypes = {
   showModal: PropTypes.bool.isRequired,
-  desafio: PropTypes.object.isRequired,
-  onUnboundAlunoDesafio: PropTypes.func.isRequired,
   onToggleShowModal: PropTypes.func.isRequired,
 };
 
-export default ModalDesafiosDisponiveis;
+export default ModalNoticiasAvisos;

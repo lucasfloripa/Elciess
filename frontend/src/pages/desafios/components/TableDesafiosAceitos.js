@@ -1,8 +1,9 @@
 import React, { Fragment } from "react";
-import formatarData from "../utils/formatDate";
+import { FontAwesomeIcon as Icon } from "@fortawesome/react-fontawesome";
+import formatarData from "../../../utils/formatDate";
 import PropTypes from "prop-types";
 
-function TableDesafiosAceitos({ desafiosDoAluno, onShowModal }) {
+function TableDesafiosAceitos({ usuarioId, desafiosDoAluno, onShowModal }) {
   return (
     <Fragment>
       <h2 className="text-white text-center mt-5">Desafios Aceitos</h2>
@@ -15,22 +16,33 @@ function TableDesafiosAceitos({ desafiosDoAluno, onShowModal }) {
                 <th scope="col">Término</th>
                 <th scope="col">Matéria</th>
                 <th scope="col">Título</th>
-                <th scope="col">Experiência</th>
+                <th scope="col">Enviado</th>
               </tr>
             </thead>
             <tbody>
               {desafiosDoAluno.map((desafio, index) => (
                 <tr
-                  key={index}
-                  onClick={() => {
-                    onShowModal(desafio);
-                  }}
+                  key={desafio._id}
+                  onClick={() =>
+                    desafio.entregue.includes(usuarioId)
+                      ? null
+                      : onShowModal(desafio)
+                  }
+                  style={{ cursor: "pointer" }}
                 >
                   <td>{formatarData(desafio.criadoEm)}</td>
                   <td>{formatarData(desafio.criadoEm)}</td>
                   <td>{desafio.professor.disciplina}</td>
                   <td>{desafio.titulo}</td>
-                  <td>{desafio.experiencia}</td>
+                  <td>
+                    <Icon
+                      icon="check-circle"
+                      color={
+                        desafio.entregue.includes(usuarioId) ? "#66ff00" : null
+                      }
+                    />
+                    {}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -42,6 +54,7 @@ function TableDesafiosAceitos({ desafiosDoAluno, onShowModal }) {
 }
 
 TableDesafiosAceitos.propTypes = {
+  usuarioId: PropTypes.string.isRequired,
   desafiosDoAluno: PropTypes.array.isRequired,
   onShowModal: PropTypes.func.isRequired,
 };

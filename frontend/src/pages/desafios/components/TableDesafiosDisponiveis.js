@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import formatarData from "../utils/formatDate";
+import formatarData from "../../../utils/formatDate";
 import PropTypes from "prop-types";
 
 function TableDesafiosDisponiveis({ desafiosDisponiveis, onShowModal }) {
@@ -15,7 +15,6 @@ function TableDesafiosDisponiveis({ desafiosDisponiveis, onShowModal }) {
                 <th scope="col">Término</th>
                 <th scope="col">Matéria</th>
                 <th scope="col">Professor</th>
-                <th scope="col">Experiência</th>
               </tr>
             </thead>
             <tbody>
@@ -25,12 +24,12 @@ function TableDesafiosDisponiveis({ desafiosDisponiveis, onShowModal }) {
                   onClick={() => {
                     onShowModal(desafio);
                   }}
+                  style={{ cursor: "pointer" }}
                 >
                   <td>{formatarData(desafio.criadoEm)}</td>
                   <td>{formatarData(desafio.criadoEm)}</td>
                   <td>{desafio.professor.disciplina}</td>
                   <td>{desafio.professor.nome}</td>
-                  <td>{desafio.experiencia}</td>
                 </tr>
               ))}
             </tbody>

@@ -5,6 +5,8 @@ import {
   DELETE_DESAFIO,
   UPDATE_DESAFIO,
   CREATE_DESAFIO,
+  UPLOAD_FILE_DESAFIO,
+  DOWNLOAD_FILE_DESAFIO,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -49,6 +51,19 @@ export default function (state = INITIAL_STATE, action) {
             ? (desafio = action.payload)
             : desafio
         ),
+      };
+    case UPLOAD_FILE_DESAFIO:
+      return {
+        ...state,
+        desafios: state.desafios.data.map((desafio) =>
+          desafio._id === action.payload.id
+            ? (desafio = action.payload)
+            : desafio
+        ),
+      };
+    case DOWNLOAD_FILE_DESAFIO:
+      return {
+        ...state,
       };
     default:
       return state;

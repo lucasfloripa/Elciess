@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function ProfileInfos({ usuarioLogado: { nome, titulos, nivel, experiencia }, avatar }) {
+function ProfileInfos({ usuarioLogado: { nome }, avatar }) {
   return (
     <div className="d-flex">
       <img
@@ -15,9 +15,6 @@ function ProfileInfos({ usuarioLogado: { nome, titulos, nivel, experiencia }, av
       />
       <div className="d-flex flex-column">
         <h3>{nome}</h3>
-        <h3>{titulos[0]}</h3>
-        <h3>Nível {nivel}</h3>
-        <h3>Experiência {experiencia}</h3>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 const express = require("express");
 const advancedResults = require("../middlewares/advancedResults");
 const Desafio = require("../models/Desafio");
+const uploadFile = require("../middlewares/StoreEngine");
 
 const {
   getDesafio,
@@ -9,6 +10,8 @@ const {
   createDesafio,
   updateDesafio,
   deleteDesafio,
+  downloadFileDesafio,
+  uploadFileDesafio,
 } = require("../controllers/desafiosController");
 
 const router = express.Router({ mergeParams: true });
@@ -29,6 +32,12 @@ router
   .get(protect, getDesafio)
   .put(protect, updateDesafio)
   .delete(protect, deleteDesafio);
+
+router
+  .route("/upload/:id")
+  .post(protect, uploadFile.single("file"), uploadFileDesafio);
+
+router.route("/download/:id").get(downloadFileDesafio);
 
 router.route("/professores/turma").get(protect, getDesafiosByTurma);
 
