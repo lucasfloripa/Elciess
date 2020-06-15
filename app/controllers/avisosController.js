@@ -10,7 +10,7 @@ exports.getAvisos = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Get avisos by turma do aluno atual
-// @route     GET /api/v1/avisos/turma
+// @route     GET /api/v1/avisos/turmaAluno
 // @acess     Private
 exports.getAvisosByTurmaAluno = asyncHandler(async (req, res, next) => {
   const idTurma = req.usuario.turma;
@@ -18,6 +18,26 @@ exports.getAvisosByTurmaAluno = asyncHandler(async (req, res, next) => {
   const avisos = await Aviso.find({ turma: idTurma }).populate({
     path: "professor",
     select: "nome",
+  });
+
+  if (!avisos) {
+    return next(new ErrorResponse("Avisos não encontrados", 404));
+  }
+
+  res
+    .status(200)
+    .json({ sucesso: true, contagem: avisos.length, data: avisos });
+});
+
+// @desc      Get avisos by professor logado
+// @route     GET /api/v1/avisos/professorLogado
+// @acess     Private
+exports.getAvisosByProfLogged = asyncHandler(async (req, res, next) => {
+  const { _id } = req.usuario;
+
+  const avisos = await Aviso.find({ professor: _id }).populate({
+    path: "turma",
+    select: "codigo",
   });
 
   if (!avisos) {

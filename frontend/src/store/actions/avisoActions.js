@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_AVISOS,
   GET_AVISOS_BY_TURMA_ALUNO,
+  GET_AVISOS_BY_PROF_LOGADO,
   CREATE_AVISO,
   UPDATE_AVISO,
   DELETE_AVISO,
@@ -21,6 +22,17 @@ export const getAvisosByTurmaAluno = () => async (dispatch) => {
 
   return dispatch({
     type: GET_AVISOS_BY_TURMA_ALUNO,
+    payload: res.data.data,
+  });
+};
+
+export const getAvisosByProfLogado = () => async (dispatch) => {
+  const res = await axios.get(
+    `http://localhost:5000/api/v1/avisos/professorLogado`
+  );
+
+  return dispatch({
+    type: GET_AVISOS_BY_PROF_LOGADO,
     payload: res.data.data,
   });
 };

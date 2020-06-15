@@ -10,6 +10,7 @@ function FormEditProfile({
   usuarioLogado: { nome },
   alertaTipo,
   alertaMensagem,
+  onShowModalAvatares,
 }) {
   return (
     <div className="bg-opacity-update-profile">
@@ -36,13 +37,21 @@ function FormEditProfile({
                 )}
               />
             </div>
-
+            <div className="form-group">
+              <Field
+                as={AvatarInput}
+                name="avatar"
+                onClick={() => {
+                  onShowModalAvatares();
+                }}
+              />
+            </div>
             <button type="submit" className="btn btn-outline-success btn-block">
               Confirmar
             </button>
           </FormikForm>
         </Formik>
-        <div className="px-5 mt-3">
+        <div className="px-5 mt-2">
           <button
             onClick={onToggleEditInfo}
             className="btn btn-outline-danger btn-block"
@@ -58,10 +67,17 @@ function FormEditProfile({
   );
 }
 
+const AvatarInput = (props) => (
+  <div className="btn btn-outline-secondary btn-block" {...props}>
+    Avatar
+  </div>
+);
+
 FormEditProfile.propTypes = {
   usuarioLogado: PropTypes.object.isRequired,
   onUpdateAluno: PropTypes.func.isRequired,
   onToggleEditInfo: PropTypes.func.isRequired,
+  onShowModalAvatares: PropTypes.func.isRequired,
   alertaTipo: PropTypes.string,
   alertaMensagem: PropTypes.string,
 };

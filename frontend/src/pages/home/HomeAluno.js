@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import avatar from "../../assets/images/avatar.jpeg";
 
 // Components
 import TableNoticiasAvisos from "./components/TableNoticiasAvisos";
@@ -17,6 +16,7 @@ function Home({
   onUpdateSenhaAluno,
   onToggleEditInfo,
   onToggleEditSenha,
+  onShowModalAvatares,
   onShowModalNoticiaAviso,
   toggleInfoEditStatus,
   toggleSenhaEditStatus,
@@ -24,7 +24,7 @@ function Home({
   alertaMensagem,
 }) {
   return (
-    <section id="section-home" className="section">
+    <section id="section-home-aluno" className="section">
       <div className="container-fluid p-0 h-100">
         <ButtomHomeActions
           onLogout={onLogout}
@@ -33,7 +33,7 @@ function Home({
         />
         <div className="d-flex h-100">
           <div className="col-md-6 p-0">
-            <ProfileInfos usuarioLogado={usuarioLogado} avatar={avatar} />
+            <ProfileInfos usuarioLogado={usuarioLogado} />
             {toggleInfoEditStatus && (
               <FormEditProfile
                 usuarioLogado={usuarioLogado}
@@ -41,6 +41,7 @@ function Home({
                 onToggleEditInfo={onToggleEditInfo}
                 alertaTipo={alertaTipo}
                 alertaMensagem={alertaMensagem}
+                onShowModalAvatares={onShowModalAvatares}
               />
             )}
             {toggleSenhaEditStatus && (
@@ -73,6 +74,7 @@ Home.propTypes = {
   onToggleEditInfo: PropTypes.func.isRequired,
   onToggleEditSenha: PropTypes.func.isRequired,
   onShowModalNoticiaAviso: PropTypes.func.isRequired,
+  onShowModalAvatares: PropTypes.func.isRequired,
   toggleInfoEditStatus: PropTypes.bool.isRequired,
   toggleSenhaEditStatus: PropTypes.bool.isRequired,
   alertaTipo: PropTypes.string,

@@ -4,6 +4,9 @@ import {
   GET_USUARIOS,
   DELETE_USUARIO,
   UPDATE_SENHA_USUARIO,
+  GET_AVATAR_FOTOS,
+  DISPLAY_AVATAR,
+  SET_USUARIO_AVATAR,
   NOTIFY_USER,
 } from "./types";
 
@@ -66,4 +69,37 @@ export const updateSenhaUsuario = (senhaAtual, novaSenha) => async (
       mensagemTipo,
     })
   );
+};
+
+export const getAvatarFotos = () => async (dispatch) => {
+  const res = await axios.get(
+    "http://localhost:5000/api/v1/usuarios/avatar/fotos"
+  );
+
+  return dispatch({
+    type: GET_AVATAR_FOTOS,
+    payload: res.data.data,
+  });
+};
+
+export const displayAvatar = (id) => async (dispatch) => {
+  const res = await axios.get(
+    `http://localhost:5000/api/v1/usuarios/avatar/fotos/${id}`
+  );
+
+  return dispatch({
+    type: DISPLAY_AVATAR,
+    payload: res.data,
+  });
+};
+
+export const setUsuarioAvatar = (id) => async (dispatch) => {
+  const res = await axios.put(
+    `http://localhost:5000/api/v1/usuarios/avatar/setFoto/${id}`
+  );
+
+  return dispatch({
+    type: SET_USUARIO_AVATAR,
+    payload: res.data.data
+  })
 };

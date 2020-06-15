@@ -130,10 +130,17 @@ exports.uploadFileDesafio = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Desafio de id ${id} não encontrado`, 404));
   }
 
+  if (!req.file.contentType.startsWith("text")) {
+    return next(new ErrorResponse(`Arquivo enviado inválido`, 400));
+  }
+
   desafio = await Desafio.findByIdAndUpdate(
     id,
     {
-      $push: { arquivoId: req.file.id, entregue: req.usuario._id },
+      $push: {
+        arquivoId: req.file.id,
+        entregue: req.usuario._id,
+      },
     },
     { new: true, runValidators: true }
   );

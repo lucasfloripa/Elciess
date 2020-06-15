@@ -1,6 +1,7 @@
 import {
   GET_AVISOS,
   GET_AVISOS_BY_TURMA_ALUNO,
+  GET_AVISOS_BY_PROF_LOGADO,
   CREATE_AVISO,
   UPDATE_AVISO,
   DELETE_AVISO,
@@ -18,6 +19,11 @@ export default function (state = INITIAL_STATE, action) {
         avisos: action.payload,
       };
     case GET_AVISOS_BY_TURMA_ALUNO:
+      return {
+        ...state,
+        avisos: action.payload,
+      };
+    case GET_AVISOS_BY_PROF_LOGADO:
       return {
         ...state,
         avisos: action.payload,

@@ -33,7 +33,7 @@ const UsuarioSchema = new mongoose.Schema(
     },
     avatar: {
       type: mongoose.Schema.ObjectId,
-      ref: "Avatar",
+      ref: "GFS",
     },
     criadoEm: {
       type: Date,

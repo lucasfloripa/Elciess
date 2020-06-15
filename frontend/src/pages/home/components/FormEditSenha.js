@@ -79,7 +79,7 @@ function FormEditSenha({
             </button>
           </FormikForm>
         </Formik>
-        <div className="px-5 mt-3">
+        <div className="px-5 mt-2">
           <button
             onClick={onToggleEditSenha}
             type="button"

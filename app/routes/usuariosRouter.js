@@ -8,6 +8,9 @@ const {
   getUsuarios,
   deleteUsuario,
   updateSenhaUsuario,
+  getAvatarFotos,
+  displayAvatar,
+  setAvatar,
 } = require("../controllers/usuariosController");
 
 const router = express.Router();
@@ -19,5 +22,11 @@ router.route("/").get(protect, advancedResults(Usuarios, null), getUsuarios);
 router.route("/:id").get(protect, getUsuario).delete(protect, deleteUsuario);
 
 router.route("/usuarioAtual").put(protect, updateSenhaUsuario);
+
+router.route("/avatar/fotos").get(getAvatarFotos);
+
+router.route("/avatar/fotos/:id").get(displayAvatar);
+
+router.route("/avatar/setFoto/:avatarId").put(protect, setAvatar);
 
 module.exports = router;

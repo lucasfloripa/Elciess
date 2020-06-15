@@ -24,9 +24,9 @@ body,
   top: 25%;
 }
 
-#section-home,
+#section-home-aluno,
+#section-home-professor,
 #section-desafios,
-#section-conquistas,
 .carousel-image-one,
 .carousel-image-two,
 .carousel-image-three,
@@ -39,11 +39,11 @@ body,
 }
 
 #section {
-  &-home {
+  &-home-aluno {
     background-image: url("../images/castle.jpg");
   }
-  &-conquistas {
-    background-image: url("../images/armory.jpg");
+  &-home-professor {
+    background-image: url("../images/study.jpg");
   }
   &-desafios {
     background-image: url("../images/desafios.jpg");
